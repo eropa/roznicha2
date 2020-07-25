@@ -18,9 +18,10 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::middleware(['auth'])->group(function () {
+    Route::prefix('upanel')->group(function () {
+        Route::get('users','UserpaneController@index')->name('upaenl.users');
+    });
+});
