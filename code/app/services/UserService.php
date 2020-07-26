@@ -6,6 +6,7 @@ namespace App\services;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserService
@@ -51,4 +52,21 @@ class UserService
         }
         return $modelUser->save();
     }
+
+    /**
+     * Обовляем данные в профиле
+     * @param Request $request
+     * @return mixed
+     */
+    static function UpdateProfil(Request $request){
+        $modelUser=User::find(Auth::id());
+        // В зависемости от типа
+        if($request->input('type')==1){
+            $modelUser->name=$request->input('name');
+        }else{
+            $modelUser->password=Hash::make($request->input('password'));
+        }
+        return $modelUser->save();
+    }
+
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\services\UserService;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserpaneController extends Controller
 {
@@ -41,9 +42,10 @@ class UserpaneController extends Controller
     }
 
     /**
-     * Удаление записи по номеру
+     * Удаление польватея по номеру
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy($id){
         $this->authorize('is_admin',User::class);
@@ -51,16 +53,44 @@ class UserpaneController extends Controller
         return redirect()->route('upaenl.users');
     }
 
+    /**
+     * Редактирование
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function edit($id){
         $this->authorize('is_admin',User::class);
         $data=User::find($id);
         return view('upanel.users.edit',['data'=>$data]);
     }
 
+    /**
+     * Обновление данных
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function update(Request $request){
         $this->authorize('is_admin',User::class);
         UserService::update($request);
         return redirect()->route('upaenl.users');
+    }
+
+
+    /**
+     * Профиль пользователя
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function profil(){
+        $data=Auth::user();
+        $company=$data->getCompany();
+        return view('upanel.profil.index',['data'=>$data,'company'=>$company]);
+    }
+
+    public function profilUpdate(Request $request){
+        UserService::UpdateProfil($request);
+        return redirect()->back();
     }
 
 }
