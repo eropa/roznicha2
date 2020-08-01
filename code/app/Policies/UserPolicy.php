@@ -20,6 +20,11 @@ class UserPolicy
         //
     }
 
+    /**
+     * Администратор или нет
+     * @param User $user
+     * @return bool
+     */
     public function is_admin(User $user){
         if (Auth::check()) {
             if($user->role=="admin"){
@@ -31,4 +36,14 @@ class UserPolicy
             return false;
         }
     }
+
+    public function get_shop(User $user){
+        if (Auth::check()) {
+            return (is_null($user->getCompany())?false:true);
+        }else{
+            return false;
+        }
+    }
+
+
 }

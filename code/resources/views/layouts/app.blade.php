@@ -51,6 +51,23 @@
                                 </div>
                             </li>
                         @endcan
+                            @can('get_shop',\App\User::class)
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle"
+                                       href="#"
+                                       id="navCompany"
+                                       role="button"
+                                       data-toggle="dropdown"
+                                       aria-haspopup="true"
+                                       aria-expanded="false">
+                                        Компания
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navCompany">
+                                        <a class="dropdown-item"
+                                           href="{{ route('upaenl.point') }}">Торговые точки</a>
+                                    </div>
+                                </li>
+                            @endcan
                     </ul>
 
                     <!-- Right Side Of Navbar -->
