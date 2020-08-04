@@ -65,6 +65,8 @@
                                     <div class="dropdown-menu" aria-labelledby="navCompany">
                                         <a class="dropdown-item"
                                            href="{{ route('upaenl.point') }}">Торговые точки</a>
+                                        <a class="dropdown-item"
+                                           href="{{ route('upaenl.pos') }}">Контрагент</a>
                                     </div>
                                 </li>
                             @endcan

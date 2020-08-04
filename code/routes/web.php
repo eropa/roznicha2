@@ -40,11 +40,25 @@ Route::middleware(['auth'])->group(function () {
         Route::post('profil/company','CompanyController@CreateProfil')->name('upaenl.profil.compaycreate');
         Route::post('profil/updatecompany','CompanyController@UpdateProfil')->name('upaenl.profil.compayupdate');
 
+        /**
+         * Торговые точки
+         */
         Route::get('point','PointController@index')->name('upaenl.point');
         Route::get('point/create','PointController@create')->name('upaenl.point.create');
         Route::post('point/create','PointController@store')->name('upaenl.point.store');
         Route::get('point/edit/{id}','PointController@edit')->name('upaenl.point.edit');
         Route::post('point/update','PointController@update')->name('upaenl.point.update');
         Route::get('point/delete/{id}','PointController@destroy')->name('upaenl.point.delete');
+
+
+        /**
+         * Клиенты и поставщики
+         */
+        Route::get('pos','PosController@index')->name('upaenl.pos');
+        Route::get('pos/create','PosController@create')->name('upaenl.pos.create');
+        Route::post('pos/create','PosController@store')->name('upaenl.pos.store');
+        Route::get('pos/edit/{id}','PosController@edit')->name('upaenl.pos.edit');
+        Route::post('pos/update','PosController@update')->name('upaenl.pos.update');
+        Route::get('pos/delete/{id}','PosController@destroy')->name('upaenl.pos.delete');
     });
 });
