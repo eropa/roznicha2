@@ -68,5 +68,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('ass/gr/edit/{id}','GrassController@editgr')->name('upaenl.ass.gredit');
         Route::post('ass/gr/update','GrassController@updategr')->name('upaenl.ass.grupdate');
         Route::get('ass/gr/delete/{id}','GrassController@delete')->name('upaenl.ass.grdelete');
+        Route::get('ass/create','AssController@create')->name('upaenl.ass.create');
+        Route::post('ass/create','AssController@story')->name('upaenl.ass.story');
+        Route::get('ass/ass/edit/{id}','AssController@edit')->name('upaenl.ass.edit');
+        Route::post('ass/ass/update','AssController@update')->name('upaenl.ass.update');
+        Route::get('ass/ass/delete/{id}','AssController@delete')->name('upaenl.ass.adddelete');
     });
 });

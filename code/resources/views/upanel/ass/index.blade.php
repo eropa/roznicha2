@@ -19,7 +19,7 @@
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                     <a class="dropdown-item" href="{{ route('upaenl.gr.create') }}">Добавить группу товара</a>
-                                    <a class="dropdown-item" href="#">Товар</a>
+                                    <a class="dropdown-item" href="{{ route('upaenl.ass.create') }}">Товар</a>
                                 </div>
                             </div>
                         </div>
@@ -63,6 +63,13 @@
                                                 <i class="fa fa-trash" aria-hidden="true"></i>
                                             </a>
                                         </td>
+                                        </tr>
+                                    @endforeach
+                                    @foreach($dataass as $dataas)
+                                        <tr>
+                                            <td>{{$dataas->id}}</td>
+                                            <td>{{$dataas->barcode}}</td>
+                                            <td>{{$dataas->name}}</td>
                                         </tr>
                                     @endforeach
 

@@ -19,7 +19,7 @@
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                     <a class="dropdown-item" href="{{ route('upaenl.gr.create') }}">Добавить группу товара</a>
-                                    <a class="dropdown-item" href="#">Товар</a>
+                                    <a class="dropdown-item" href="{{ route('upaenl.ass.create') }}">Товар</a>
                                 </div>
                             </div>
                         </div>
@@ -62,6 +62,26 @@
                                                 </a>
                                                 <a class="btn btn-danger"
                                                    href="{{ route('upaenl.ass.grdelete',['id'=>$datagr->id]) }}"
+                                                   role="button">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    @foreach($dataass as $dataas)
+                                        <tr>
+                                            <td>{{$dataas->id}}</td>
+                                            <td>{{$dataas->barcode}}</td>
+                                            <td>{{$dataas->name}}</td>
+                                            <td>{{$dataas->group->name}}</td>
+                                            <td>
+                                                <a class="btn btn-warning"
+                                                   href="{{ route('upaenl.ass.edit',['id'=>$dataas->id]) }}"
+                                                   role="button">
+                                                    <i class='fas fa-edit'></i>
+                                                </a>
+                                                <a class="btn btn-danger"
+                                                   href="{{ route('upaenl.ass.adddelete',['id'=>$dataas->id]) }}"
                                                    role="button">
                                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                                 </a>

@@ -4,9 +4,11 @@
 namespace App\services;
 
 
+use App\Models\Ass;
 use App\Models\Grass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use phpDocumentor\Reflection\Types\Iterable_;
 
 class AssService
 {
@@ -91,6 +93,39 @@ class AssService
             abort(404);
         }
         return $data;
+    }
+
+
+    static function createAss(Request $request){
+        $modelAss=new Ass();
+        $modelAss->name=$request->input('name');
+        $modelAss->barcode=$request->input('barcode');
+        $modelAss->grass_id=$request->input('grass_id');
+        $modelAss->sostav=(is_null($request->input('sostav'))?0:1);
+        return $modelAss->save();
+    }
+
+    static function listAssGrId($group_id){
+        $datas= Ass::where('grass_id',$group_id)->get();
+        return $datas;
+    }
+
+    static function dataAssId($id){
+        $data=Ass::find($id);
+        return $data;
+    }
+
+    static function updateAss(Request $request){
+        $modelAss=Ass::find($request->input('id'));
+        $modelAss->name=$request->input('name');
+        $modelAss->barcode=$request->input('barcode');
+        $modelAss->grass_id=$request->input('grass_id');
+        $modelAss->sostav=(is_null($request->input('sostav'))?0:1);
+        return $modelAss->save();
+    }
+
+    static function deleteAss($id){
+        Ass::destroy($id);
     }
 
 }
