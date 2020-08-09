@@ -25,7 +25,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <b>LIV</b>Розница 2.0 (v1.1)
+                    <b>LIV</b>Розница 2.0 (v1.3)
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -67,6 +67,8 @@
                                            href="{{ route('upaenl.point') }}">Торговые точки</a>
                                         <a class="dropdown-item"
                                            href="{{ route('upaenl.pos') }}">Контрагент</a>
+                                        <a class="dropdown-item"
+                                           href="{{ route('upaenl.ass') }}">Ассортимент</a>
                                     </div>
                                 </li>
                             @endcan

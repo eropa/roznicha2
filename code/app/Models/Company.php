@@ -12,7 +12,6 @@ class Company extends Model
         if(is_null($company)){
             return null;
         }else{
-
             return Point::where('company_id',$company->id)->get();
         }
     }

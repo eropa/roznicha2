@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    <b>LIV</b>Розница 2.0 (v1.1)
+                    <b>LIV</b>Розница 2.0 (v1.3)
                 </div>
             </div>
         </div>
