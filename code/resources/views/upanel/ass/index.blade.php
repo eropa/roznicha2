@@ -40,8 +40,9 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
+
                                     @foreach($datagrs as $datagr)
+                                        <tr>
                                         <td>{{$datagr->id}}</td>
                                         <td></td>
                                         <td></td>
@@ -62,8 +63,9 @@
                                                 <i class="fa fa-trash" aria-hidden="true"></i>
                                             </a>
                                         </td>
+                                        </tr>
                                     @endforeach
-                                </tr>
+
                                 </tbody>
                             </table>
                         </div>
