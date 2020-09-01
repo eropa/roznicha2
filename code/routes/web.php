@@ -73,5 +73,16 @@ Route::middleware(['auth'])->group(function () {
         Route::get('ass/ass/edit/{id}','AssController@edit')->name('upaenl.ass.edit');
         Route::post('ass/ass/update','AssController@update')->name('upaenl.ass.update');
         Route::get('ass/ass/delete/{id}','AssController@delete')->name('upaenl.ass.adddelete');
+
+        Route::get('prixod','PrihController@index')->name('upaenl.prixod');
+        Route::get('prixod/create','PrihController@create')->name('upaenl.prixod.create');
     });
+    // получаем данные
+    Route::post('/get/prixodcreate','PrihController@getDataCreate');
+    Route::post('/get/assortiment','PrihController@getDataAss');
+    Route::post('/set/prixod','PrihController@setPrixod');
+    Route::post('/get/assid','AssController@getAssId');
+    Route::post(' /get/prix1','PrihController@getPrixod');
+    Route::post(' /delete/prix','PrihController@deletPrixod');
+
 });

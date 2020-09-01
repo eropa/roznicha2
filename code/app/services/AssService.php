@@ -128,4 +128,14 @@ class AssService
         Ass::destroy($id);
     }
 
+    static function getAllAss(){
+        $company=Auth::user()->getCompany();
+        $datas=Ass::whereIn('asses.grass_id',function ($query) use ($company) {
+            $query->select('grasses.id')
+                ->from('grasses')
+                ->where('grasses.company_id',$company->id);
+        })->get();
+        return $datas;
+    }
+
 }

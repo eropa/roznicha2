@@ -30,6 +30,7 @@ class AssController extends Controller
         //dd($id);
         $data=AssService::dataAssId($id);
         $datagrs=AssService::listGrAll();
+        $datasass= AssService::getAllAss();
         return view('upanel.ass.editass',['data'=>$data,'datagrs'=>$datagrs]);
     }
 
@@ -41,6 +42,11 @@ class AssController extends Controller
     public function delete($id){
         AssService::deleteAss($id);
         return redirect()->route('upaenl.ass');
+    }
+
+    public function getAssId(Request $request){
+        $data=AssService::dataAssId($request->input('id'));
+        return response()->json($data);
     }
 
 
