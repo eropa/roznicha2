@@ -76,6 +76,11 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('prixod','PrihController@index')->name('upaenl.prixod');
         Route::get('prixod/create','PrihController@create')->name('upaenl.prixod.create');
+
+        Route::get('rasxod','RashController@index')->name('upaenl.rasxod');
+        Route::get('rasxod/create','RashController@create')->name('upaenl.rasxod.create');
+
+
     });
     // получаем данные
     Route::post('/get/prixodcreate','PrihController@getDataCreate');
@@ -84,5 +89,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/get/assid','AssController@getAssId');
     Route::post(' /get/prix1','PrihController@getPrixod');
     Route::post(' /delete/prix','PrihController@deletPrixod');
-
+    Route::post(' /get/rasass','RashController@getRasass');
+    Route::post(' /get/rasassmain','RashController@getRasassMain');
 });

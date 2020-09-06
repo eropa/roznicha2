@@ -4,6 +4,7 @@
 namespace App\services;
 
 
+use App\Models\Ass;
 use App\Models\Grass;
 use App\Models\Point;
 use App\Models\Pos;
@@ -62,4 +63,41 @@ class getData
         }
         return $array;
     }
+
+    static function getPointsRas(){
+        $company=Auth::user()->getCompany();
+        $data=Point::where('company_id',$company->id)->first();
+        if(is_null($data)){
+            return abort(404);
+        }
+        return $data;
+    }
+
+    static function getPossRas(){
+        $company=Auth::user()->getCompany();
+        $data=Pos::where('company_id',$company->id)->first();
+        if(is_null($data)){
+            return abort(404);
+        }
+        return $data;
+    }
+
+    static function getAssRasNew(){
+        $company=Auth::user()->getCompany();
+        $datas=Grass::where('company_id',$company->id)->where('parent_id',0)->get();
+        if(is_null($datas)){
+            return abort(404);
+        }
+        return $datas;
+    }
+
+    static function getAssGr($id){
+        $datas=Ass::where('grass_id',$id)->get();
+        if(is_null($datas)){
+            return abort(404);
+        }
+        return $datas;
+    }
+
+
 }

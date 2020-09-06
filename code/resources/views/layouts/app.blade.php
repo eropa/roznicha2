@@ -84,6 +84,8 @@
                                     <div class="dropdown-menu" aria-labelledby="navCompany">
                                         <a class="dropdown-item"
                                            href="{{ route('upaenl.prixod') }}">Приходы</a>
+                                        <a class="dropdown-item"
+                                           href="{{ route('upaenl.rasxod') }}">Расходы</a>
                                     </div>
                                 </li>
                             @endcan
