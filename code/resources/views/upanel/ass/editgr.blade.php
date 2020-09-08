@@ -19,7 +19,7 @@
                     </div>
 
                     <div class="card-body">
-                        <form action="{{ route('upaenl.ass.grupdate') }}" method="post">
+                        <form action="{{ route('upaenl.ass.grupdate') }}" method="post" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="inputName">Название</label>
                                 <input type="text" class="form-control"
@@ -47,6 +47,32 @@
                                         >{{ $datagr->name }}</option>
                                     @endforeach
                                 </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="selectGr">Видимость</label>
+                                <select class="form-control"  name="visible_ras">
+                                    <option value="1"
+                                        @if($data->visible_ras==1)
+                                            selected
+                                        @endif
+                                        >Да</option>
+                                    <option value="0"
+                                            @if($data->visible_ras==0)
+                                            selected
+                                        @endif
+                                    >Нет</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="customFile" name="image">
+                                    <label class="custom-file-label" for="customFile">Загрузить иконку</label>
+                                    @if($data->image!=null)
+                                        <img src="{{asset('/groups/'.$data->image)}}"
+                                             width="200"
+                                             class="rounded" alt="..."><br><br>
+                                    @endif
+                                </div>
                             </div>
                             @csrf
                             <input type="hidden" name="id" value="{{$data->id}}">

@@ -36,9 +36,11 @@
                                 <thead>
                                 <tr>
                                     <th scope="col">id</th>
+                                    <th scope="col"></th>
                                     <th scope="col">Бар-код</th>
                                     <th scope="col">Название</th>
                                     <th scope="col">Группа товара</th>
+                                    <th scope="col">Видимость</th>
                                     <th scope="col">event</th>
                                 </tr>
                                 </thead>
@@ -49,10 +51,14 @@
                                             <td>{{$datagr->id}}</td>
                                             <td></td>
                                             <td></td>
+                                            <td></td>
                                             <td>
                                                 <a href="{{ route('upaenl.ass.gr',['id'=>$datagr->id]) }}">
                                                     {{$datagr->name}}
                                                 </a>
+                                            </td>
+                                            <td>
+                                                {{($datagr->visible_ras?"Да":"Нет")}}
                                             </td>
                                             <td>
                                                 <a class="btn btn-warning"
@@ -71,9 +77,13 @@
                                     @foreach($dataass as $dataas)
                                         <tr>
                                             <td>{{$dataas->id}}</td>
+                                            <td>{{ (is_null($dataas->image)?"-":"") }}</td>
                                             <td>{{$dataas->barcode}}</td>
                                             <td>{{$dataas->name}}</td>
                                             <td>{{$dataas->group->name}}</td>
+                                            <td>
+                                                {{($dataas->visible_ras?"Да":"Нет")}}
+                                            </td>
                                             <td>
                                                 <a class="btn btn-warning"
                                                    href="{{ route('upaenl.ass.edit',['id'=>$dataas->id]) }}"

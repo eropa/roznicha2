@@ -49,6 +49,12 @@ class AssController extends Controller
         return response()->json($data);
     }
 
+    public function saveDate(Request $request){
+       // dump($request->all());
+        AssService::updateAss($request);
+        return 1;
+    }
+
 
 
 }

@@ -4,6 +4,7 @@
 namespace App\services;
 
 
+use App\Models\Userpoint;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -50,6 +51,16 @@ class UserService
         }else{
             $modelUser->password=Hash::make($request->input('password'));
         }
+
+        if($request->input('firma')>0 && $request->input('point')){
+            Userpoint::where('user_id',$request->input('user_id'))->delete();
+            $modelSvizka=new Userpoint();
+            $modelSvizka->user_id=$request->input('user_id');
+            $modelSvizka->point_id=$request->input('point');
+            $modelSvizka->company_id=$request->input('firma');
+            $modelSvizka->save();
+        }
+
         return $modelUser->save();
     }
 

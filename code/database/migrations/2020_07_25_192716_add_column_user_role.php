@@ -14,7 +14,7 @@ class AddColumnUserRole extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->set('role',['user','admin'])->default('user');
+            $table->set('role',['user','admin','kassir'])->default('user');
         });
     }
 

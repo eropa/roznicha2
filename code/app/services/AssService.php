@@ -9,6 +9,7 @@ use App\Models\Grass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use phpDocumentor\Reflection\Types\Iterable_;
+use Illuminate\Support\Str;
 
 class AssService
 {
@@ -22,7 +23,15 @@ class AssService
         $modelGr=new Grass();
         $modelGr->name=$request->input('name');
         $modelGr->parent_id=$request->input('parent_id');
+        $modelGr->visible_ras=$request->input('visible_ras');
         $modelGr->company_id=$company->id;
+        if($request->file('image')){
+            $file = $request->file('image');
+            $roundName=Str::random(10).".". $file->extension();
+            $destinationPath = 'groups';
+            $file->move($destinationPath,$roundName);
+            $modelGr->image=$roundName;
+        }
         return $modelGr->save();
     }
 
@@ -37,7 +46,15 @@ class AssService
         $modelGr=Grass::find($request->input('id'));
         $modelGr->name=$request->input('name');
         $modelGr->parent_id=$request->input('parent_id');
+        $modelGr->visible_ras=$request->input('visible_ras');
         $modelGr->company_id=$company->id;
+        if($request->file('image')){
+            $file = $request->file('image');
+            $roundName=Str::random(10).".". $file->extension();
+            $destinationPath = 'groups';
+            $file->move($destinationPath,$roundName);
+            $modelGr->image=$roundName;
+        }
         return $modelGr->save();
     }
 
@@ -105,6 +122,18 @@ class AssService
         return $modelAss->save();
     }
 
+    static function updateAss(Request $request){
+        $data=$request->input('data');
+        $modelAss=Ass::find($data['id']);
+        $modelAss->name=$data['name'];
+        $modelAss->barcode=$data['barcode'];
+        $modelAss->grass_id=$data['grass_id'];
+        $modelAss->sostav=$data['sostav'];
+        $modelAss->visible_ras=$data['visible_ras'];
+        $modelAss->price=$data['price'];
+        return $modelAss->save();
+    }
+
     static function listAssGrId($group_id){
         $datas= Ass::where('grass_id',$group_id)->get();
         return $datas;
@@ -114,7 +143,7 @@ class AssService
         $data=Ass::find($id);
         return $data;
     }
-
+    /*
     static function updateAss(Request $request){
         $modelAss=Ass::find($request->input('id'));
         $modelAss->name=$request->input('name');
@@ -122,7 +151,7 @@ class AssService
         $modelAss->grass_id=$request->input('grass_id');
         $modelAss->sostav=(is_null($request->input('sostav'))?0:1);
         return $modelAss->save();
-    }
+    }*/
 
     static function deleteAss($id){
         Ass::destroy($id);

@@ -38,6 +38,24 @@
                     <option  v-for="(item, index) in listgroup" v-bind:value="item.id">{{item.name}}</option>
                 </select>
             </div>
+            <div class="form-group">
+                <label for="selectView">Видимость товара в расходе</label>
+                <select class="form-control" id="selectView"
+                        v-model="tovar['visible_ras']"
+                >
+                    <option value="1">Да</option>
+                    <option value="0">Нет</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="inputPrice">цена</label>
+                <input type="text" class="form-control"
+                       id="inputPrice"
+                       name="barcode"
+                       v-model="tovar['price']"
+                       required
+                       placeholder="Бар-код товара">
+            </div>
 
             <div class="form-group" v-if="tovar['sostav']">
                 <label for="selectGr"><b>Состав</b></label>
@@ -68,7 +86,7 @@
 
 
             <input type="hidden" name="id" >
-            <button type="button" class="btn btn-primary" >Обновить</button>
+            <button type="button" class="btn btn-primary" v-on:click="saveData()" >Обновить</button>
         </form>
 
 
@@ -91,6 +109,16 @@
                 newTovar:"",
                 newBarCode:"",
             }
+        },
+        methods: {
+            saveData: function () {
+                axios.post('/get/saveass', {
+                    data:this.data,
+                }).then ((response)=>{
+                    console.log(response.data);
+                    alert('Сохранил');
+                });
+            },
         },
         created: function() {
             this.listgroup=this.datagrs;

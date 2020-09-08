@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
+use App\Models\Point;
 use App\services\UserService;
 use App\User;
 use Illuminate\Http\Request;
@@ -62,7 +64,9 @@ class UserpaneController extends Controller
     public function edit($id){
         $this->authorize('is_admin',User::class);
         $data=User::find($id);
-        return view('upanel.users.edit',['data'=>$data]);
+        $dataCom=Company::all();
+        $dataPoint=Point::all();
+        return view('upanel.users.edit',['data'=>$data,'dataCom'=>$dataCom,'dataPoint'=>$dataPoint]);
     }
 
     /**

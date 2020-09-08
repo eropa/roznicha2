@@ -48,8 +48,34 @@
                                             @if($data->role=="admin")
                                             selected
                                         @endif>Администратор системы</option>
+                                    <option value="kassir"
+                                            @if($data->role=="kassir")
+                                            selected
+                                        @endif>Кассир</option>
                                 </select>
                             </div>
+
+                            <div class="form-group">
+                                <label for="selectRole">К какой фирме закрепить</label>
+                                <select class="form-control"  name="firma"  >
+                                    <option value="0">Без фирмы</option>
+                                    @foreach($dataCom as $item)
+                                        <option value="{{$item->id}}">{{$item->short_name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="selectRole">Склад</label>
+                                <select class="form-control"name="point"  >
+                                    <option value="0">Без склада</option>
+
+                                    @foreach($dataPoint as $item)
+                                        <option value="{{$item->id}}">{{$item->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
                             <input type="hidden" name="type" value="1">
                             <input type="hidden" name="user_id" value="{{$data->id}}">
                             @csrf

@@ -19,7 +19,7 @@
                     </div>
 
                     <div class="card-body">
-                        <form action="{{ route('upaenl.gr.story') }}" method="post">
+                        <form action="{{ route('upaenl.gr.story') }}" method="post" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="inputName">Название</label>
                                 <input type="text" class="form-control"
@@ -36,6 +36,18 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="form-group">
+                                <label for="selectGr">Видимость</label>
+                                <select class="form-control"  name="visible_ras">
+                                    <option value="1">Да</option>
+                                    <option value="0">Нет</option>
+                                </select>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="customFile" name="image">
+                                <label class="custom-file-label" for="customFile">Загрузить иконку</label>
+                            </div>
+                            <br>
                             @csrf
                             <button type="submit" class="btn btn-primary">Создать</button>
                         </form>

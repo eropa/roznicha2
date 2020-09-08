@@ -28,10 +28,14 @@ class GrassController extends Controller
     }
 
     public function showassgr($id){
+
+        if($id==0){
+            return redirect()->route('upaenl.ass');
+        }
+
         $datagrs=AssService::listGrID($id);
         $dataParGr=AssService::getGrParentId($id);
         $dataass=AssService::listAssGrId($id);
-        //dump($dataParGr);
         return view('upanel.ass.showassgr',['datagrs'=>$datagrs,
             'dataParGr'=>$dataParGr,
             'dataass'=>$dataass]);

@@ -48,4 +48,8 @@ class PrihController extends Controller
         return 1;
     }
 
+    public function foundParam(Request $request){
+        $datas=getData::getPrixonFound($request);
+        return response()->json($datas);
+    }
 }

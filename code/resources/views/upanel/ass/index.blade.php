@@ -33,9 +33,9 @@
                                 <thead>
                                 <tr>
                                     <th scope="col">id</th>
-                                    <th scope="col">Бар-код</th>
-                                    <th scope="col">Название</th>
+                                    <th scope="col">Фото</th>
                                     <th scope="col">Группа товара</th>
+                                    <th scope="col">Видимость в расходе</th>
                                     <th scope="col">event</th>
                                 </tr>
                                 </thead>
@@ -44,13 +44,17 @@
                                     @foreach($datagrs as $datagr)
                                         <tr>
                                         <td>{{$datagr->id}}</td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>@if($datagr->image!=null)
+                                                <img src="{{asset('/groups/'.$datagr->image)}}"
+                                                     width="200"
+                                                     class="rounded" alt="...">
+                                            @endif</td>
                                         <td>
                                             <a href="{{ route('upaenl.ass.gr',['id'=>$datagr->id]) }}">
                                                 {{$datagr->name}}
                                             </a>
-                                          </td>
+                                        </td>
+                                        <td>{{ ($datagr->visible_ras==0?"Нет":"Да") }}</td>
                                         <td>
                                             <a class="btn btn-warning"
                                                href="{{ route('upaenl.ass.gredit',['id'=>$datagr->id]) }}"

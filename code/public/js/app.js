@@ -1985,6 +1985,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "EditassComponent",
   props: ['datagrs', 'data'],
@@ -2000,6 +2018,16 @@ __webpack_require__.r(__webpack_exports__);
       newTovar: "",
       newBarCode: ""
     };
+  },
+  methods: {
+    saveData: function saveData() {
+      axios.post('/get/saveass', {
+        data: this.data
+      }).then(function (response) {
+        console.log(response.data);
+        alert('Сохранил');
+      });
+    }
   },
   created: function created() {
     this.listgroup = this.datagrs; //  this.selectedGroup=this.data['id'];
@@ -2334,37 +2362,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "PrixodlistComponent",
   props: ['listpoints', 'listpos'],
@@ -2373,7 +2370,9 @@ __webpack_require__.r(__webpack_exports__);
       strRas: "",
       selectSklad: 0,
       selectPos: 0,
-      prixodList: []
+      prixodList: [],
+      data1: null,
+      data2: null
     };
   },
   methods: {
@@ -2392,14 +2391,28 @@ __webpack_require__.r(__webpack_exports__);
         console.log(response.data);
         alert('Запись удалена');
       });
+    },
+    // поиск приходов
+    foundRecord: function foundRecord() {
+      var _this2 = this;
+
+      console.log(this.data1);
+      console.log(this.data2);
+      axios.post('/found/prix', {
+        data1: this.data1,
+        data2: this.data2
+      }).then(function (response) {
+        _this2.prixodList = [];
+        _this2.prixodList = response.data;
+      });
     }
   },
   created: function created() {
-    var _this2 = this;
+    var _this3 = this;
 
     // `this` указывает на экземпляр vm
     axios.post('/get/prix1').then(function (response) {
-      _this2.prixodList = response.data;
+      _this3.prixodList = response.data;
     });
   }
 });
@@ -2492,20 +2505,93 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "RasxodComponent",
   props: ['pos', 'point', 'assstart'],
   data: function data() {
     return {
       listrasxod: [],
-      pos: 0,
-      point: 0,
-      sum: 0.00,
+      sumRas: 0.00,
       listgrass: [],
       viewBtnMain: 0,
       modalData: null,
       countAdd: 0,
-      selectDataId: 0
+      selectDataId: 0,
+      selectData: null
     };
   },
   methods: {
@@ -2518,11 +2604,13 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/get/rasass', {
         id: id
       }).then(function (response) {
+        console.log(response.data);
         _this.listgrass = [];
         response.data.forEach(function (element) {
           _this.listgrass.push({
             id: element.id,
             name: element.name,
+            price: element.price,
             type: 1
           });
         });
@@ -2532,6 +2620,7 @@ __webpack_require__.r(__webpack_exports__);
     addAss: function addAss(item) {
       //  this.modalData=item;
       this.selectDataId = item.id;
+      this.selectData = item;
       this.countAdd = 0;
       $('#myModalAddTovar').modal('show');
     },
@@ -2555,16 +2644,58 @@ __webpack_require__.r(__webpack_exports__);
       this.countAdd--;
     },
     addAssRas: function addAssRas() {
-      // alert( this.selectDataId);
+      var _this3 = this;
+
+      var newAss = 1;
+      this.listrasxod.forEach(function (item) {
+        if (item.id == _this3.selectData.id) {
+          newAss = 0;
+          item.count = item.count + _this3.countAdd;
+          item.sum = (item.count * _this3.selectData.price).toFixed(2);
+        }
+      });
+
+      if (newAss == 1) {
+        // Добовляем новый товар в строчку
+        this.listrasxod.push({
+          id: this.selectData.id,
+          name: this.selectData.name,
+          count: this.countAdd,
+          price: this.selectData.price,
+          sum: (this.countAdd * this.selectData.price).toFixed(2)
+        });
+      }
+
+      var tempSum = 0.00;
+      this.listrasxod.forEach(function (item) {
+        tempSum = tempSum + Number(item.sum);
+      });
+      this.sumRas = tempSum.toFixed(2);
       $('#myModalAddTovar').modal('hide');
+    },
+    showRas: function showRas() {
+      $('#myModalRasxod').modal('show');
+    },
+    deletItemRas: function deletItemRas(index) {
+      this.listrasxod.splice(index, 1);
+      var tempSum = 0.00;
+      this.listrasxod.forEach(function (item) {
+        tempSum = tempSum + Number(item.sum);
+      });
+      this.sumRas = tempSum.toFixed(2);
+    },
+    saveRas: function saveRas() {
+      $('#myModalRasxod').modal('hide');
+      $('#myUsrOplata').modal('show');
+      document.location.replace("/upanel/rasxod");
     }
   },
   created: function created() {
-    var _this3 = this;
+    var _this4 = this;
 
     // `this` указывает на экземпляр vm
     this.assstart.forEach(function (element) {
-      _this3.listgrass.push({
+      _this4.listgrass.push({
         id: element.id,
         name: element.name,
         type: 0
@@ -38341,6 +38472,82 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "selectView" } }, [
+            _vm._v("Видимость товара в расходе")
+          ]),
+          _vm._v(" "),
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.tovar["visible_ras"],
+                  expression: "tovar['visible_ras']"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { id: "selectView" },
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.$set(
+                    _vm.tovar,
+                    "visible_ras",
+                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                  )
+                }
+              }
+            },
+            [
+              _c("option", { attrs: { value: "1" } }, [_vm._v("Да")]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "0" } }, [_vm._v("Нет")])
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "inputPrice" } }, [_vm._v("цена")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.tovar["price"],
+                expression: "tovar['price']"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              type: "text",
+              id: "inputPrice",
+              name: "barcode",
+              required: "",
+              placeholder: "Бар-код товара"
+            },
+            domProps: { value: _vm.tovar["price"] },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.tovar, "price", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
         _vm.tovar["sostav"]
           ? _c("div", { staticClass: "form-group" }, [
               _vm._m(0),
@@ -38371,7 +38578,15 @@ var render = function() {
         _vm._v(" "),
         _c(
           "button",
-          { staticClass: "btn btn-primary", attrs: { type: "button" } },
+          {
+            staticClass: "btn btn-primary",
+            attrs: { type: "button" },
+            on: {
+              click: function($event) {
+                return _vm.saveData()
+              }
+            }
+          },
           [_vm._v("Обновить")]
         )
       ]
@@ -39016,111 +39231,79 @@ var render = function() {
   return _c("div", [
     _c("div", { staticClass: "row" }, [
       _c("form", [
-        _vm._m(0),
-        _vm._v(" "),
         _c("div", { staticClass: "form-row" }, [
-          _c("div", { staticClass: "col-md-4" }, [
-            _c("label", { attrs: { for: "pos" } }, [_vm._v("Поставщик")]),
+          _c("div", { staticClass: "col-md-6 mb-6" }, [
+            _c("label", { attrs: { for: "datas" } }, [_vm._v("Дата С")]),
             _vm._v(" "),
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.selectPos,
-                    expression: "selectPos"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { id: "pos" },
-                on: {
-                  change: function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.selectPos = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
-                  }
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.data1,
+                  expression: "data1"
                 }
-              },
-              [
-                _c("option", { attrs: { value: "0" } }, [
-                  _vm._v("Выберите из списка")
-                ]),
-                _vm._v(" "),
-                _vm._l(_vm.listpos, function(item, index) {
-                  return _c("option", { domProps: { value: item.id } }, [
-                    _vm._v(_vm._s(item.name))
-                  ])
-                })
               ],
-              2
-            )
+              staticClass: "form-control",
+              attrs: { type: "date", id: "datas" },
+              domProps: { value: _vm.data1 },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.data1 = $event.target.value
+                }
+              }
+            })
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-4" }, [
-            _c("label", { attrs: { for: "sklad" } }, [_vm._v("Склад")]),
+          _c("div", { staticClass: "col-md-6 mb-6" }, [
+            _c("label", { attrs: { for: "datapo" } }, [_vm._v("Дата ПО")]),
             _vm._v(" "),
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.selectSklad,
-                    expression: "selectSklad"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { id: "sklad" },
-                on: {
-                  change: function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.selectSklad = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
-                  }
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.data2,
+                  expression: "data2"
                 }
-              },
-              [
-                _c("option", { attrs: { value: "0" } }, [
-                  _vm._v("Выберите торговую точку")
-                ]),
-                _vm._v(" "),
-                _vm._l(_vm.listpoints, function(item, index) {
-                  return _c("option", { domProps: { value: item.id } }, [
-                    _vm._v(_vm._s(item.name))
-                  ])
-                })
               ],
-              2
-            )
+              staticClass: "form-control",
+              attrs: { type: "date", id: "datapo" },
+              domProps: { value: _vm.data2 },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.data2 = $event.target.value
+                }
+              }
+            })
           ]),
           _vm._v(" "),
-          _vm._m(1)
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary",
+              attrs: { type: "button" },
+              on: {
+                click: function($event) {
+                  return _vm.foundRecord()
+                }
+              }
+            },
+            [_vm._v("Поиск")]
+          )
         ])
       ])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("table", { staticClass: "table table-hover" }, [
-        _vm._m(2),
+        _vm._m(0),
         _vm._v(" "),
         _c(
           "tbody",
@@ -39164,26 +39347,6 @@ var render = function() {
                     _vm._s(item.point_name) +
                     "\n                "
                 )
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                _vm._v(
-                  "\n                    Печать\n                    /\n                    "
-                ),
-                _c(
-                  "button",
-                  {
-                    on: {
-                      click: function($event) {
-                        return _vm.deleteRecord(index, item.id)
-                      }
-                    }
-                  },
-                  [_vm._v("Удалить")]
-                ),
-                _vm._v(
-                  "\n\n                    /\n                    Редактировать\n                "
-                )
               ])
             ])
           }),
@@ -39198,53 +39361,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-row" }, [
-      _c("div", { staticClass: "col-md-4 mb-3" }, [
-        _c("label", { attrs: { for: "datas" } }, [_vm._v("Дата С")]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: { type: "date", id: "datas", required: "" }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-4 mb-3" }, [
-        _c("label", { attrs: { for: "datapo" } }, [_vm._v("Дата ПО")]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: { type: "date", id: "datapo" }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-4 mb-3" }, [
-        _c("label", { attrs: { for: "dataoplatu" } }, [_vm._v("Дата оплаты")]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: { type: "date", id: "dataoplatu" }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-4" }, [
-      _c("br"),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "button" } },
-        [_vm._v("Поиск")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("id")]),
@@ -39255,9 +39371,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Поставщик")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Склад")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Действие")])
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Склад")])
       ])
     ])
   }
@@ -39354,27 +39468,29 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.sum,
-                      expression: "sum"
+                      value: _vm.sumRas,
+                      expression: "sumRas"
                     }
                   ],
                   staticClass: "form-control",
                   attrs: { type: "text", readonly: "" },
-                  domProps: { value: _vm.sum },
+                  domProps: { value: _vm.sumRas },
                   on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.sum = $event.target.value
+                      _vm.sumRas = $event.target.value
                     }
                   }
                 })
               ]),
               _vm._v(" "),
-              _c("button", { staticClass: "btn btn-success" }, [
-                _vm._v("Создать")
-              ]),
+              _c(
+                "button",
+                { staticClass: "btn btn-success", on: { click: _vm.showRas } },
+                [_vm._v("Создать")]
+              ),
               _c("br"),
               _c("br"),
               _vm._v(" "),
@@ -39571,7 +39687,124 @@ var render = function() {
           ])
         ])
       ]
-    )
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade bd-example-modal-lg",
+        attrs: {
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "myLargeModalLabel",
+          "aria-hidden": "true",
+          id: "myModalRasxod"
+        }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog modal-lg" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("table", { staticClass: "table table-hover" }, [
+                  _vm._m(2),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.listrasxod, function(item, index) {
+                      return _c("tr", [
+                        _c("td", [
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(index + 1) +
+                              "\n                                "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(item.name) +
+                              "\n                                "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(item.count) +
+                              "\n                                "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(item.price) +
+                              "\n                                "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(item.sum) +
+                              "\n                                "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-danger",
+                              attrs: { type: "button" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.deletItemRas(index)
+                                }
+                              }
+                            },
+                            [_vm._v("-")]
+                          )
+                        ])
+                      ])
+                    }),
+                    0
+                  )
+                ]),
+                _vm._v(" "),
+                _c("hr"),
+                _vm._v(" "),
+                _c("h5", [
+                  _vm._v("ИТОГО : "),
+                  _c("b", [_vm._v(_vm._s(_vm.sumRas))])
+                ]),
+                _c("br"),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.saveRas()
+                      }
+                    }
+                  },
+                  [_vm._v("Оплата")]
+                )
+              ])
+            ])
+          ])
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _vm._m(3)
   ])
 }
 var staticRenderFns = [
@@ -39599,6 +39832,104 @@ var staticRenderFns = [
         [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
       )
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c("h5", { staticClass: "modal-title" }, [_vm._v("Расход")]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("№")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Название")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("кол-во")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("цена")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Итого")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Удалить")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "modal fade bd-example-modal-lg",
+        attrs: {
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "myLargeModalLabel",
+          "aria-hidden": "true",
+          id: "myUsrOplata"
+        }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog modal-lg" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _c("div", { staticClass: "modal-header" }, [
+              _c(
+                "h5",
+                {
+                  staticClass: "modal-title",
+                  attrs: { id: "exampleModalLabel" }
+                },
+                [_vm._v("Результат оплаты")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "close",
+                  attrs: {
+                    type: "button",
+                    "data-dismiss": "modal",
+                    "aria-label": "Close"
+                  }
+                },
+                [
+                  _c("span", { attrs: { "aria-hidden": "true" } }, [
+                    _vm._v("×")
+                  ])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _vm._v(
+                "\n                    Оплата прошла успешна\n                "
+              )
+            ])
+          ])
+        ])
+      ]
+    )
   }
 ]
 render._withStripped = true

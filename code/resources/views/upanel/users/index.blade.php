@@ -29,6 +29,8 @@
                                     <th scope="col">name</th>
                                     <th scope="col">email</th>
                                     <th scope="col">role</th>
+                                    <th scope="col">фирма</th>
+                                    <th scope="col">склад</th>
                                     <th scope="col">event</th>
                                 </tr>
                                 </thead>
@@ -39,6 +41,12 @@
                                             <td>{{$data->name}}</td>
                                             <td>{{$data->email}}</td>
                                             <td>{{$data->role}}</td>
+                                            <?php
+                                                $dataUserComPoin=\App\services\getData::getDataComPoin($data->id);
+
+                                            ?>
+                                            <td>{{ ((is_null($dataUserComPoin)?'-':$dataUserComPoin->Company->short_name))}}</td>
+                                            <td>{{ ((is_null($dataUserComPoin)?'-':$dataUserComPoin->Point->name))}}</td>
                                             <td><a class="btn btn-warning"
                                                    href="{{ route('upaenl.users.edit',['id'=>$data->id]) }}"
                                                    role="button">
