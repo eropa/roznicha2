@@ -9,6 +9,7 @@ use App\Models\Grass;
 use App\Models\Point;
 use App\Models\Pos;
 use App\Models\Prih;
+use App\Models\Rash;
 use App\Models\Userpoint;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -126,6 +127,27 @@ class getData
     static function getDataComPoin($user_id){
         $data=Userpoint::where('user_id',$user_id)->first();
         return $data;
+    }
+
+
+    static function geRasxodFound(Request $request){
+        $company=Auth::user()->getCompany();
+        $datas=Rash::where('company_id',$company->id)
+            ->whereDate('created_at','>=',Carbon::parse($request->input('data1')))
+            ->whereDate('created_at','<=',Carbon::parse($request->input('data2')))
+            ->orderBY('id','desc')
+            ->get();
+        $array=array();
+        foreach($datas as $data){
+            $array[]=([
+                'id'=>$data->id,
+                'date_cr'=>$data->created_at,
+                'pos'=>$data->pos->name,
+                'point'=>$data->point->name,
+                'sum_ras'=>$data->sum,
+            ]);
+        }
+        return $array;
     }
 
 

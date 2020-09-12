@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="row">
+        <div class="row" v-if="kassir==0">
             <form>
                 <div class="form-row">
                     <div class="col-md-6 mb-6">
@@ -25,14 +25,30 @@
                     <th scope="col">Дата</th>
                     <th scope="col">Клиент</th>
                     <th scope="col">Торговая точка</th>
-                    <th scope="col">Склад</th>
                     <th scope="col">Сумма</th>
                 </tr>
                 </thead>
                 <tbody>
-
+                    <tr v-for="(item, index) in rasxList">
+                       <td>
+                           {{item.id}}
+                       </td>
+                        <td>
+                            {{item.date_cr}}
+                        </td>
+                        <td>
+                            {{item.pos}}
+                        </td>
+                        <td>
+                            {{item.point}}
+                        </td>
+                        <td>
+                            {{item.sum_ras}} руб.
+                        </td>
+                    </tr>
                 </tbody>
             </table>
+
         </div>
     </div>
 </template>
@@ -40,11 +56,35 @@
 <script>
     export default {
         name: "RaslistComponent",
+        props: ['kassir'],
         data() {
             return {
                 data1:null,
                 data2:null,
+                rasxList:[],
             }
+        },
+        //    /get/rasxodfound
+        methods: {
+            // поиск расходов
+            foundRecord:function () {
+                console.log(this.data1);
+                console.log(this.data2);
+                axios.post(' /get/rasxodfound', {
+                    data1:this.data1,
+                    data2:this.data2,
+                }).then ((response)=>{
+                    this.prixodList=[];
+                    this.rasxList=response.data;
+                });
+            },
+        },
+        created: function () {
+            // `this` указывает на экземпляр vm
+            axios.post('/get/rasxodtoday').then((response) => {
+                console.log(response.data);
+                this.rasxList = response.data;
+            });
         }
     }
 

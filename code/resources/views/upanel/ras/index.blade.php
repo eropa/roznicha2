@@ -20,7 +20,7 @@
                     </div>
 
                     <div class="card-body">
-                        <rasxodlist-component>
+                        <rasxodlist-component :kassir="{{$kassir}}">
                         </rasxodlist-component>
                     </div>
                 </div>

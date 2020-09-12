@@ -6,13 +6,15 @@ use App\Models\Rash;
 use App\services\getData;
 use App\services\RassService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RashController extends Controller
 {
 
     public function index()
     {
-        return  view('upanel.ras.index');
+        $kassir=(Auth::user()->role=="kassir"?1:0);
+        return  view('upanel.ras.index',['kassir'=>$kassir]);
     }
 
 
@@ -33,8 +35,18 @@ class RashController extends Controller
     }
 
     public function addrasxod(Request $request){
-        dump($request->all());
         RassService::create($request);
+        return 1;
+    }
+
+    public function getToday(){
+        $datas=RassService::selectToday();
+        return response()->json($datas);
+    }
+
+    public function getFound(Request $request){
+        $datas=getData::geRasxodFound($request);
+        return response()->json($datas);
     }
 
 

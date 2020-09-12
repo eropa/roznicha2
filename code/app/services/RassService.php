@@ -6,6 +6,7 @@ namespace App\services;
 
 use App\Models\Rasb;
 use App\Models\Rash;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -39,5 +40,25 @@ class RassService
         }
         $modelR->sum=$sum;
         $modelR->save();
+    }
+
+    static function selectToday(){
+        $user=Auth::user();
+        $datas=Rash::whereDate('created_at',Carbon::today())->orderBy('id','desc');
+        if($user->role=="kassir"){
+            $datas=$datas->where('user_id',$user->id);
+        }
+        $datas=$datas->get();
+        $arrayRetur=array();
+        foreach ($datas as $data){
+            $arrayRetur[]=([
+                'id'=>$data->id,
+                'date_cr'=>date_format($data->created_at, 'Y-m-d H:i:s'),
+                'pos'=>$data->pos->name,
+                'point'=>$data->point->name,
+                'sum_ras'=>$data->sum,
+            ]);
+        }
+        return $arrayRetur;
     }
 }

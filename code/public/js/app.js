@@ -2505,13 +2505,57 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "RaslistComponent",
+  props: ['kassir'],
   data: function data() {
     return {
       data1: null,
-      data2: null
+      data2: null,
+      rasxList: []
     };
+  },
+  //    /get/rasxodfound
+  methods: {
+    // поиск расходов
+    foundRecord: function foundRecord() {
+      var _this = this;
+
+      console.log(this.data1);
+      console.log(this.data2);
+      axios.post(' /get/rasxodfound', {
+        data1: this.data1,
+        data2: this.data2
+      }).then(function (response) {
+        _this.prixodList = [];
+        _this.rasxList = response.data;
+      });
+    }
+  },
+  created: function created() {
+    var _this2 = this;
+
+    // `this` указывает на экземпляр vm
+    axios.post('/get/rasxodtoday').then(function (response) {
+      console.log(response.data);
+      _this2.rasxList = response.data;
+    });
   }
 });
 
@@ -39547,79 +39591,133 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "row" }, [
-      _c("form", [
-        _c("div", { staticClass: "form-row" }, [
-          _c("div", { staticClass: "col-md-6 mb-6" }, [
-            _c("label", { attrs: { for: "datas" } }, [_vm._v("Дата С")]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.data1,
-                  expression: "data1"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "date", id: "datas" },
-              domProps: { value: _vm.data1 },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+    _vm.kassir == 0
+      ? _c("div", { staticClass: "row" }, [
+          _c("form", [
+            _c("div", { staticClass: "form-row" }, [
+              _c("div", { staticClass: "col-md-6 mb-6" }, [
+                _c("label", { attrs: { for: "datas" } }, [_vm._v("Дата С")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.data1,
+                      expression: "data1"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "date", id: "datas" },
+                  domProps: { value: _vm.data1 },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.data1 = $event.target.value
+                    }
                   }
-                  _vm.data1 = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-6 mb-6" }, [
-            _c("label", { attrs: { for: "datapo" } }, [_vm._v("Дата ПО")]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.data2,
-                  expression: "data2"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "date", id: "datapo" },
-              domProps: { value: _vm.data2 },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-6 mb-6" }, [
+                _c("label", { attrs: { for: "datapo" } }, [_vm._v("Дата ПО")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.data2,
+                      expression: "data2"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "date", id: "datapo" },
+                  domProps: { value: _vm.data2 },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.data2 = $event.target.value
+                    }
                   }
-                  _vm.data2 = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-primary",
-              attrs: { type: "button" },
-              on: {
-                click: function($event) {
-                  return _vm.foundRecord()
-                }
-              }
-            },
-            [_vm._v("Поиск")]
-          )
+                })
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.foundRecord()
+                    }
+                  }
+                },
+                [_vm._v("Поиск")]
+              )
+            ])
+          ])
         ])
-      ])
-    ]),
+      : _vm._e(),
     _vm._v(" "),
-    _vm._m(0)
+    _c("div", { staticClass: "row" }, [
+      _c("table", { staticClass: "table table-hover" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.rasxList, function(item, index) {
+            return _c("tr", [
+              _c("td", [
+                _vm._v(
+                  "\n                       " +
+                    _vm._s(item.id) +
+                    "\n                   "
+                )
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _vm._v(
+                  "\n                        " +
+                    _vm._s(item.date_cr) +
+                    "\n                    "
+                )
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _vm._v(
+                  "\n                        " +
+                    _vm._s(item.pos) +
+                    "\n                    "
+                )
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _vm._v(
+                  "\n                        " +
+                    _vm._s(item.point) +
+                    "\n                    "
+                )
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _vm._v(
+                  "\n                        " +
+                    _vm._s(item.sum_ras) +
+                    " руб.\n                    "
+                )
+              ])
+            ])
+          }),
+          0
+        )
+      ])
+    ])
   ])
 }
 var staticRenderFns = [
@@ -39627,25 +39725,17 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("table", { staticClass: "table table-hover" }, [
-        _c("thead", [
-          _c("tr", [
-            _c("th", { attrs: { scope: "col" } }, [_vm._v("id")]),
-            _vm._v(" "),
-            _c("th", { attrs: { scope: "col" } }, [_vm._v("Дата")]),
-            _vm._v(" "),
-            _c("th", { attrs: { scope: "col" } }, [_vm._v("Клиент")]),
-            _vm._v(" "),
-            _c("th", { attrs: { scope: "col" } }, [_vm._v("Торговая точка")]),
-            _vm._v(" "),
-            _c("th", { attrs: { scope: "col" } }, [_vm._v("Склад")]),
-            _vm._v(" "),
-            _c("th", { attrs: { scope: "col" } }, [_vm._v("Сумма")])
-          ])
-        ]),
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("id")]),
         _vm._v(" "),
-        _c("tbody")
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Дата")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Клиент")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Торговая точка")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Сумма")])
       ])
     ])
   }
