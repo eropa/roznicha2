@@ -20,7 +20,8 @@
                     </div>
 
                     <div class="card-body">
-
+                        <rasxodlist-component>
+                        </rasxodlist-component>
                     </div>
                 </div>
             </div>

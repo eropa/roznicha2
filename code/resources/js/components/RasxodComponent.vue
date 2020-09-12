@@ -27,17 +27,36 @@
                                         <button type="button" class="btn btn-primary" style="width:100%" v-on:click="showMain()">На главную</button>
                                     </div>
 
+
+
+
+
+
+
                                   <div class="card col-md-3" style="
                                         margin-right: 5px;
                                         margin-left: 5px;
                                         margin-top: 5px;
                                         margin-bottom: 5px;
-                                    "  v-for="(item, index) in listgrass">
+                                        backgroundColor:#ccffff;
+                                    "  v-for="(item, index) in listgrass" v-if="item.type==0">
 
-                                      <img src="https://img-global.cpcdn.com/recipes/aa5f8ead8c8fab44bf915c22e68db61d8f156a5914a1b3c2389b2b74db36be31/751x532cq70/pitsa-za-5-minut-%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D0%BD%D0%BE%D0%B5-%D1%84%D0%BE%D1%82%D0%BE-%D1%80%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D0%B0.jpg"
+                                      <img v-bind:src="'/groups/' + item.image"
                                            class="card-img-top" alt="..." v-on:click="openGr(item.id)" v-if="item.type==0">
-                                      <img src="https://img-global.cpcdn.com/recipes/aa5f8ead8c8fab44bf915c22e68db61d8f156a5914a1b3c2389b2b74db36be31/751x532cq70/pitsa-za-5-minut-%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D0%BD%D0%BE%D0%B5-%D1%84%D0%BE%D1%82%D0%BE-%D1%80%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D0%B0.jpg"
-                                           class="card-img-top" alt="..." v-on:click="addAss(item)" v-if="item.type==1">
+                                      <div class="card-body">
+                                          <p class="card-title"><b>{{item.name}}</b></p>
+                                          <p class="card-text" v-if="item.type">{{item.price}} руб.</p>
+                                      </div>
+                                  </div>
+
+                                  <div class="card col-md-3" style="
+                                            margin-right: 5px;
+                                            margin-left: 5px;
+                                            margin-top: 5px;
+                                            margin-bottom: 5px;
+                                        "  v-for="(item, index) in listgrass" v-if="item.type==1">
+                                      <img  v-bind:src="'/ass_tovar/' + item.image"
+                                            class="card-img-top" alt="..." v-on:click="addAss(item)" v-if="item.type==1">
                                       <div class="card-body">
                                           <p class="card-title"><b>{{item.name}}</b></p>
                                           <p class="card-text" v-if="item.type">{{item.price}} руб.</p>
@@ -182,6 +201,7 @@
                                 id:element.id,
                                 name:element.name,
                                 price:element.price,
+                                image:element.image,
                                 type:1,
                             })
                         }
@@ -204,6 +224,7 @@
                         this.listgrass.push({
                             id:element.id,
                             name:element.name,
+                            image:element.image,
                             type:0,
                         })
                     }
@@ -263,9 +284,23 @@
             },
 
             saveRas:function(){
-                $('#myModalRasxod').modal('hide');
-                $('#myUsrOplata').modal('show')
-                document.location.replace("/upanel/rasxod");
+                axios.post('/set/addrasxod', {
+                    selectPos:this.pos,
+                    selectSklad:this.point,
+                    listrasxod:this.listrasxod,
+                }).then ((response)=>{
+                    $('#myModalRasxod').modal('hide');
+                    $('#myUsrOplata').modal('show')
+                    document.location.replace("/upanel/rasxod");
+                });
+
+
+            },
+
+            createRas:function () {
+                //this.visibleBtnCreate=0;
+
+
             }
 
         },
@@ -275,6 +310,7 @@
                     this.listgrass.push({
                             id:element.id,
                             name:element.name,
+                            image:element.image,
                             type:0,
                         })
                     }

@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Models\Company;
+use App\Models\Userpoint;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -41,6 +42,11 @@ class User extends Authenticatable
 
     public function getCompany(){
         $company=Company::where('user_id',Auth::id())->first();
+        if(is_null($company)){
+            $data=Userpoint::where('user_id',Auth::id())->first();
+            $company=Company::where('id',$data->company_id)->first();
+        }
+
         return $company;
     }
 

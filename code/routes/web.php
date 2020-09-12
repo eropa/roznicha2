@@ -93,4 +93,5 @@ Route::middleware(['auth'])->group(function () {
     Route::post(' /get/rasassmain','RashController@getRasassMain');
     Route::post('/get/saveass','AssController@saveDate');
     Route::post(' /found/prix','PrihController@foundParam');
+    Route::post('  /set/addrasxod','RashController@addrasxod');
 });

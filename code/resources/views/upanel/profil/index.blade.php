@@ -56,51 +56,54 @@
                     </div>
                 </div>
                 <br>
-                <div class="card">
-                    <div class="card-header">
-                        Компания
+                @can('is_admin',\App\User::class)
+                    <div class="card">
+                        <div class="card-header">
+                            Компания
+                        </div>
+                        <div class="card-body">
+                            @if(is_null($company))
+                                <form action="{{ route('upaenl.profil.compaycreate') }}" method="post">
+                                    <div class="form-group">
+                                        <label for="inputShot">Короткое название фирмы</label>
+                                        <input type="text"
+                                               class="form-control"
+                                               id="inputShot"
+                                               name="short_name"
+                                               required
+                                               placeholder="Короткое название фирмы">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputFull">Полное название фирмы</label>
+                                        <textarea class="form-control" id="inputFull" rows="3" name="full_name" required></textarea>
+                                    </div>
+                                    @csrf
+                                    <button type="submit" class="btn btn-primary">Создать компанию</button>
+                                </form>
+                            @else
+                                <form action="{{ route('upaenl.profil.compayupdate') }}" method="post">
+                                    <div class="form-group">
+                                        <label for="inputShot">Короткое название фирмы</label>
+                                        <input type="text"
+                                               class="form-control"
+                                               id="inputShot"
+                                               name="short_name"
+                                               value="{{$company->short_name}}"
+                                               required
+                                               placeholder="Короткое название фирмы">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputFull">Полное название фирмы</label>
+                                        <textarea class="form-control" id="inputFull" rows="3" name="full_name" required>{{$company->full_name}}</textarea>
+                                    </div>
+                                    @csrf
+                                    <button type="submit" class="btn btn-primary">Обновить данные компании</button>
+                                </form>
+                            @endif
+                        </div>
                     </div>
-                    <div class="card-body">
-                        @if(is_null($company))
-                            <form action="{{ route('upaenl.profil.compaycreate') }}" method="post">
-                                <div class="form-group">
-                                    <label for="inputShot">Короткое название фирмы</label>
-                                    <input type="text"
-                                           class="form-control"
-                                           id="inputShot"
-                                           name="short_name"
-                                           required
-                                           placeholder="Короткое название фирмы">
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputFull">Полное название фирмы</label>
-                                    <textarea class="form-control" id="inputFull" rows="3" name="full_name" required></textarea>
-                                </div>
-                                @csrf
-                                <button type="submit" class="btn btn-primary">Создать компанию</button>
-                            </form>
-                        @else
-                            <form action="{{ route('upaenl.profil.compayupdate') }}" method="post">
-                                <div class="form-group">
-                                    <label for="inputShot">Короткое название фирмы</label>
-                                    <input type="text"
-                                           class="form-control"
-                                           id="inputShot"
-                                           name="short_name"
-                                           value="{{$company->short_name}}"
-                                           required
-                                           placeholder="Короткое название фирмы">
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputFull">Полное название фирмы</label>
-                                    <textarea class="form-control" id="inputFull" rows="3" name="full_name" required>{{$company->full_name}}</textarea>
-                                </div>
-                                @csrf
-                                <button type="submit" class="btn btn-primary">Обновить данные компании</button>
-                            </form>
-                        @endif
-                    </div>
-                </div>
+                @endif
+
             </div>
         </div>
     </div>

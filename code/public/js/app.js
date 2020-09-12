@@ -1908,6 +1908,24 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2016,17 +2034,37 @@ __webpack_require__.r(__webpack_exports__);
       selectedGroup: 0,
       editIdTovar: 0,
       newTovar: "",
-      newBarCode: ""
+      newBarCode: "",
+      image_ass: null
     };
   },
   methods: {
     saveData: function saveData() {
-      axios.post('/get/saveass', {
-        data: this.data
+      var formData = new FormData();
+      formData.append('file', this.image_ass);
+
+      for (var _i = 0, _Object$entries = Object.entries(this.data); _i < _Object$entries.length; _i++) {
+        var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
+            key = _Object$entries$_i[0],
+            value = _Object$entries$_i[1];
+
+        //console.log(key, value);
+        formData.append(key, value);
+      }
+
+      axios.post('/get/saveass', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
       }).then(function (response) {
         console.log(response.data);
         alert('Сохранил');
       });
+    },
+    handleFileUpload: function handleFileUpload() {
+      this.image_ass = this.$refs.file.files[0];
+      console.log(this.image_ass);
+      console.log(this.$refs.file.files[0]);
     }
   },
   created: function created() {
@@ -2419,6 +2457,66 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/RaslistComponent.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/RaslistComponent.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "RaslistComponent",
+  data: function data() {
+    return {
+      data1: null,
+      data2: null
+    };
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/RasxodComponent.vue?vue&type=script&lang=js&":
 /*!**************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/RasxodComponent.vue?vue&type=script&lang=js& ***!
@@ -2428,6 +2526,25 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2611,6 +2728,7 @@ __webpack_require__.r(__webpack_exports__);
             id: element.id,
             name: element.name,
             price: element.price,
+            image: element.image,
             type: 1
           });
         });
@@ -2632,6 +2750,7 @@ __webpack_require__.r(__webpack_exports__);
         _this2.listgrass.push({
           id: element.id,
           name: element.name,
+          image: element.image,
           type: 0
         });
       });
@@ -2685,9 +2804,17 @@ __webpack_require__.r(__webpack_exports__);
       this.sumRas = tempSum.toFixed(2);
     },
     saveRas: function saveRas() {
-      $('#myModalRasxod').modal('hide');
-      $('#myUsrOplata').modal('show');
-      document.location.replace("/upanel/rasxod");
+      axios.post('/set/addrasxod', {
+        selectPos: this.pos,
+        selectSklad: this.point,
+        listrasxod: this.listrasxod
+      }).then(function (response) {
+        $('#myModalRasxod').modal('hide');
+        $('#myUsrOplata').modal('show');
+        document.location.replace("/upanel/rasxod");
+      });
+    },
+    createRas: function createRas() {//this.visibleBtnCreate=0;
     }
   },
   created: function created() {
@@ -2698,6 +2825,7 @@ __webpack_require__.r(__webpack_exports__);
       _this4.listgrass.push({
         id: element.id,
         name: element.name,
+        image: element.image,
         type: 0
       });
     });
@@ -38574,6 +38702,27 @@ var render = function() {
             ])
           : _vm._e(),
         _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("div", { staticClass: "custom-file" }, [
+            _c("input", {
+              ref: "file",
+              staticClass: "custom-file-input",
+              attrs: { type: "file", id: "file" },
+              on: {
+                change: function($event) {
+                  return _vm.handleFileUpload()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              { staticClass: "custom-file-label", attrs: { for: "file" } },
+              [_vm._v("Загрузить иконку")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
         _c("input", { attrs: { type: "hidden", name: "id" } }),
         _vm._v(" "),
         _c(
@@ -39382,6 +39531,131 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/RaslistComponent.vue?vue&type=template&id=7a20ed46&scoped=true&":
+/*!*******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/RaslistComponent.vue?vue&type=template&id=7a20ed46&scoped=true& ***!
+  \*******************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "row" }, [
+      _c("form", [
+        _c("div", { staticClass: "form-row" }, [
+          _c("div", { staticClass: "col-md-6 mb-6" }, [
+            _c("label", { attrs: { for: "datas" } }, [_vm._v("Дата С")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.data1,
+                  expression: "data1"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "date", id: "datas" },
+              domProps: { value: _vm.data1 },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.data1 = $event.target.value
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6 mb-6" }, [
+            _c("label", { attrs: { for: "datapo" } }, [_vm._v("Дата ПО")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.data2,
+                  expression: "data2"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "date", id: "datapo" },
+              domProps: { value: _vm.data2 },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.data2 = $event.target.value
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary",
+              attrs: { type: "button" },
+              on: {
+                click: function($event) {
+                  return _vm.foundRecord()
+                }
+              }
+            },
+            [_vm._v("Поиск")]
+          )
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _vm._m(0)
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("table", { staticClass: "table table-hover" }, [
+        _c("thead", [
+          _c("tr", [
+            _c("th", { attrs: { scope: "col" } }, [_vm._v("id")]),
+            _vm._v(" "),
+            _c("th", { attrs: { scope: "col" } }, [_vm._v("Дата")]),
+            _vm._v(" "),
+            _c("th", { attrs: { scope: "col" } }, [_vm._v("Клиент")]),
+            _vm._v(" "),
+            _c("th", { attrs: { scope: "col" } }, [_vm._v("Торговая точка")]),
+            _vm._v(" "),
+            _c("th", { attrs: { scope: "col" } }, [_vm._v("Склад")]),
+            _vm._v(" "),
+            _c("th", { attrs: { scope: "col" } }, [_vm._v("Сумма")])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("tbody")
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/RasxodComponent.vue?vue&type=template&id=7f6457b9&scoped=true&":
 /*!******************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/RasxodComponent.vue?vue&type=template&id=7f6457b9&scoped=true& ***!
@@ -39536,63 +39810,91 @@ var render = function() {
               : _vm._e(),
             _vm._v(" "),
             _vm._l(_vm.listgrass, function(item, index) {
-              return _c(
-                "div",
-                {
-                  staticClass: "card col-md-3",
-                  staticStyle: {
-                    "margin-right": "5px",
-                    "margin-left": "5px",
-                    "margin-top": "5px",
-                    "margin-bottom": "5px"
-                  }
-                },
-                [
-                  item.type == 0
-                    ? _c("img", {
-                        staticClass: "card-img-top",
-                        attrs: {
-                          src:
-                            "https://img-global.cpcdn.com/recipes/aa5f8ead8c8fab44bf915c22e68db61d8f156a5914a1b3c2389b2b74db36be31/751x532cq70/pitsa-za-5-minut-%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D0%BD%D0%BE%D0%B5-%D1%84%D0%BE%D1%82%D0%BE-%D1%80%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D0%B0.jpg",
-                          alt: "..."
-                        },
-                        on: {
-                          click: function($event) {
-                            return _vm.openGr(item.id)
-                          }
-                        }
-                      })
-                    : _vm._e(),
-                  _vm._v(" "),
-                  item.type == 1
-                    ? _c("img", {
-                        staticClass: "card-img-top",
-                        attrs: {
-                          src:
-                            "https://img-global.cpcdn.com/recipes/aa5f8ead8c8fab44bf915c22e68db61d8f156a5914a1b3c2389b2b74db36be31/751x532cq70/pitsa-za-5-minut-%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D0%BD%D0%BE%D0%B5-%D1%84%D0%BE%D1%82%D0%BE-%D1%80%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D0%B0.jpg",
-                          alt: "..."
-                        },
-                        on: {
-                          click: function($event) {
-                            return _vm.addAss(item)
-                          }
-                        }
-                      })
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "card-body" }, [
-                    _c("p", { staticClass: "card-title" }, [
-                      _c("b", [_vm._v(_vm._s(item.name))])
-                    ]),
-                    _vm._v(" "),
-                    item.type
-                      ? _c("p", { staticClass: "card-text" }, [
-                          _vm._v(_vm._s(item.price) + " руб.")
-                        ])
-                      : _vm._e()
-                  ])
-                ]
-              )
+              return item.type == 0
+                ? _c(
+                    "div",
+                    {
+                      staticClass: "card col-md-3",
+                      staticStyle: {
+                        "margin-right": "5px",
+                        "margin-left": "5px",
+                        "margin-top": "5px",
+                        "margin-bottom": "5px",
+                        backgroundColor: "#ccffff"
+                      }
+                    },
+                    [
+                      item.type == 0
+                        ? _c("img", {
+                            staticClass: "card-img-top",
+                            attrs: { src: "/groups/" + item.image, alt: "..." },
+                            on: {
+                              click: function($event) {
+                                return _vm.openGr(item.id)
+                              }
+                            }
+                          })
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "card-body" }, [
+                        _c("p", { staticClass: "card-title" }, [
+                          _c("b", [_vm._v(_vm._s(item.name))])
+                        ]),
+                        _vm._v(" "),
+                        item.type
+                          ? _c("p", { staticClass: "card-text" }, [
+                              _vm._v(_vm._s(item.price) + " руб.")
+                            ])
+                          : _vm._e()
+                      ])
+                    ]
+                  )
+                : _vm._e()
+            }),
+            _vm._v(" "),
+            _vm._l(_vm.listgrass, function(item, index) {
+              return item.type == 1
+                ? _c(
+                    "div",
+                    {
+                      staticClass: "card col-md-3",
+                      staticStyle: {
+                        "margin-right": "5px",
+                        "margin-left": "5px",
+                        "margin-top": "5px",
+                        "margin-bottom": "5px"
+                      }
+                    },
+                    [
+                      item.type == 1
+                        ? _c("img", {
+                            staticClass: "card-img-top",
+                            attrs: {
+                              src: "/ass_tovar/" + item.image,
+                              alt: "..."
+                            },
+                            on: {
+                              click: function($event) {
+                                return _vm.addAss(item)
+                              }
+                            }
+                          })
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "card-body" }, [
+                        _c("p", { staticClass: "card-title" }, [
+                          _c("b", [_vm._v(_vm._s(item.name))])
+                        ]),
+                        _vm._v(" "),
+                        item.type
+                          ? _c("p", { staticClass: "card-text" }, [
+                              _vm._v(_vm._s(item.price) + " руб.")
+                            ])
+                          : _vm._e()
+                      ])
+                    ]
+                  )
+                : _vm._e()
             })
           ],
           2
@@ -52130,6 +52432,7 @@ Vue.component('editass-component', __webpack_require__(/*! ./components/EditassC
 Vue.component('prixod-component', __webpack_require__(/*! ./components/PrixodComponent.vue */ "./resources/js/components/PrixodComponent.vue")["default"]);
 Vue.component('prixodlist-component', __webpack_require__(/*! ./components/PrixodlistComponent.vue */ "./resources/js/components/PrixodlistComponent.vue")["default"]);
 Vue.component('rasxod-component', __webpack_require__(/*! ./components/RasxodComponent.vue */ "./resources/js/components/RasxodComponent.vue")["default"]);
+Vue.component('rasxodlist-component', __webpack_require__(/*! ./components/RaslistComponent.vue */ "./resources/js/components/RaslistComponent.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -52458,6 +52761,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PrixodlistComponent_vue_vue_type_template_id_4001b0de_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PrixodlistComponent_vue_vue_type_template_id_4001b0de_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/RaslistComponent.vue":
+/*!******************************************************!*\
+  !*** ./resources/js/components/RaslistComponent.vue ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _RaslistComponent_vue_vue_type_template_id_7a20ed46_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RaslistComponent.vue?vue&type=template&id=7a20ed46&scoped=true& */ "./resources/js/components/RaslistComponent.vue?vue&type=template&id=7a20ed46&scoped=true&");
+/* harmony import */ var _RaslistComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RaslistComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/RaslistComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _RaslistComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _RaslistComponent_vue_vue_type_template_id_7a20ed46_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _RaslistComponent_vue_vue_type_template_id_7a20ed46_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "7a20ed46",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/RaslistComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/RaslistComponent.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/RaslistComponent.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RaslistComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./RaslistComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/RaslistComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RaslistComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/RaslistComponent.vue?vue&type=template&id=7a20ed46&scoped=true&":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/RaslistComponent.vue?vue&type=template&id=7a20ed46&scoped=true& ***!
+  \*************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RaslistComponent_vue_vue_type_template_id_7a20ed46_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./RaslistComponent.vue?vue&type=template&id=7a20ed46&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/RaslistComponent.vue?vue&type=template&id=7a20ed46&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RaslistComponent_vue_vue_type_template_id_7a20ed46_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RaslistComponent_vue_vue_type_template_id_7a20ed46_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

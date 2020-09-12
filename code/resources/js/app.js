@@ -24,6 +24,7 @@ Vue.component('editass-component',require('./components/EditassComponent.vue').d
 Vue.component('prixod-component',require('./components/PrixodComponent.vue').default);
 Vue.component('prixodlist-component',require('./components/PrixodlistComponent.vue').default);
 Vue.component('rasxod-component',require('./components/RasxodComponent.vue').default);
+Vue.component('rasxodlist-component',require('./components/RaslistComponent.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

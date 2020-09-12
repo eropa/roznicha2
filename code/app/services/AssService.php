@@ -123,14 +123,20 @@ class AssService
     }
 
     static function updateAss(Request $request){
-        $data=$request->input('data');
-        $modelAss=Ass::find($data['id']);
-        $modelAss->name=$data['name'];
-        $modelAss->barcode=$data['barcode'];
-        $modelAss->grass_id=$data['grass_id'];
-        $modelAss->sostav=$data['sostav'];
-        $modelAss->visible_ras=$data['visible_ras'];
-        $modelAss->price=$data['price'];
+        $modelAss=Ass::find($request->input('id'));
+        $modelAss->name=$request->input('name');
+        $modelAss->barcode=$request->input('barcode');
+        $modelAss->grass_id=$request->input('grass_id');
+        $modelAss->sostav=$request->input('sostav');
+        $modelAss->visible_ras=$request->input('visible_ras');
+        $modelAss->price=$request->input('price');
+        if($request->file('file')){
+            $file = $request->file('file');
+            $roundName=Str::random(10).".". $file->extension();
+            $destinationPath = 'ass_tovar';
+            $file->move($destinationPath,$roundName);
+            $modelAss->image=$roundName;
+        }
         return $modelAss->save();
     }
 

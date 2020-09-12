@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Rash;
 use App\services\getData;
+use App\services\RassService;
 use Illuminate\Http\Request;
 
 class RashController extends Controller
@@ -31,6 +32,10 @@ class RashController extends Controller
         return response()->json($datas);
     }
 
+    public function addrasxod(Request $request){
+        dump($request->all());
+        RassService::create($request);
+    }
 
 
 }

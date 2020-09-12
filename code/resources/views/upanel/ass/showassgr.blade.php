@@ -77,7 +77,15 @@
                                     @foreach($dataass as $dataas)
                                         <tr>
                                             <td>{{$dataas->id}}</td>
-                                            <td>{{ (is_null($dataas->image)?"-":"") }}</td>
+                                            <td>
+                                                @if(is_null($dataas->image))
+                                                    -
+                                                @else
+                                                    <img src="{{asset('/ass_tovar/'.$dataas->image)}}"
+                                                         width="200"
+                                                         class="rounded" alt="...">
+                                                @endif
+                                            </td>
                                             <td>{{$dataas->barcode}}</td>
                                             <td>{{$dataas->name}}</td>
                                             <td>{{$dataas->group->name}}</td>

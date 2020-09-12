@@ -50,7 +50,7 @@ class AssController extends Controller
     }
 
     public function saveDate(Request $request){
-       // dump($request->all());
+
         AssService::updateAss($request);
         return 1;
     }

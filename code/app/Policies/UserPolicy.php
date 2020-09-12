@@ -37,6 +37,18 @@ class UserPolicy
         }
     }
 
+    public function is_kassir(User $user){
+        if (Auth::check()) {
+            if($user->role=="kassir"){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
     public function get_shop(User $user){
         if (Auth::check()) {
             return (is_null($user->getCompany())?false:true);

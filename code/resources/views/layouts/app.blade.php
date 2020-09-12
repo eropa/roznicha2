@@ -51,7 +51,7 @@
                                 </div>
                             </li>
                         @endcan
-                            @can('get_shop',\App\User::class)
+                        @can('is_admin',\App\User::class)
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle"
                                        href="#"
@@ -88,7 +88,25 @@
                                            href="{{ route('upaenl.rasxod') }}">Расходы</a>
                                     </div>
                                 </li>
-                            @endcan
+                        @endcan
+                        @can('is_kassir',\App\User::class)
+                            <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle"
+                                       href="#"
+                                       id="navCompany"
+                                       role="button"
+                                       data-toggle="dropdown"
+                                       aria-haspopup="true"
+                                       aria-expanded="false">
+                                        Документы
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navCompany">
+
+                                        <a class="dropdown-item"
+                                           href="{{ route('upaenl.rasxod') }}">Расходы</a>
+                                    </div>
+                            </li>
+                        @endcan
                     </ul>
 
                     <!-- Right Side Of Navbar -->

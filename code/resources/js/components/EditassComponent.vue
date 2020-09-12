@@ -84,6 +84,12 @@
                 </table>
             </div>
 
+            <div class="form-group">
+                <div class="custom-file">
+                    <input type="file" id="file"  class="custom-file-input" ref="file" v-on:change="handleFileUpload()"/>
+                    <label class="custom-file-label" for="file">Загрузить иконку</label>
+                </div>
+            </div>
 
             <input type="hidden" name="id" >
             <button type="button" class="btn btn-primary" v-on:click="saveData()" >Обновить</button>
@@ -108,17 +114,32 @@
                 editIdTovar:0,
                 newTovar:"",
                 newBarCode:"",
+                image_ass:null,
             }
         },
         methods: {
             saveData: function () {
-                axios.post('/get/saveass', {
-                    data:this.data,
-                }).then ((response)=>{
+                let formData = new FormData();
+                formData.append('file', this.image_ass);
+                for (const [key, value] of Object.entries(this.data)) {
+                    //console.log(key, value);
+                    formData.append(key,value);
+                }
+                axios.post('/get/saveass',formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                        }
+                    }
+                    ).then ((response)=>{
                     console.log(response.data);
                     alert('Сохранил');
                 });
             },
+            handleFileUpload: function (){
+                this.image_ass = this.$refs.file.files[0];
+                console.log(this.image_ass);
+                console.log(this.$refs.file.files[0]);
+            }
         },
         created: function() {
             this.listgroup=this.datagrs;
