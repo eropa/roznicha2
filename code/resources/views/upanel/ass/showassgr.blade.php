@@ -29,7 +29,10 @@
                         Ассортимент
                         <hr>
                         @if(!is_null($dataParGr))
-                         <a href="{{ route('upaenl.ass.gr',['id'=>$dataParGr->parent_id]) }}">На верх группу</a>
+                         <a
+                             class="btn btn-success"
+                             role="button"
+                             href="{{ route('upaenl.ass.gr',['id'=>$dataParGr->parent_id]) }}">На верх группу</a>
                         @endif
                         <div class="table-responsive">
                             <table class="table table-hover">
@@ -41,7 +44,8 @@
                                     <th scope="col">Название</th>
                                     <th scope="col">Группа товара</th>
                                     <th scope="col">Видимость</th>
-                                    <th scope="col">event</th>
+                                    <th scope="col">цена</th>
+                                    <th scope="col">Действие</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -59,6 +63,9 @@
                                             </td>
                                             <td>
                                                 {{($datagr->visible_ras?"Да":"Нет")}}
+                                            </td>
+                                            <td>
+                                               -
                                             </td>
                                             <td>
                                                 <a class="btn btn-warning"
@@ -91,6 +98,9 @@
                                             <td>{{$dataas->group->name}}</td>
                                             <td>
                                                 {{($dataas->visible_ras?"Да":"Нет")}}
+                                            </td>
+                                            <td>
+                                                <b>{{$dataas->price}} руб.</b>
                                             </td>
                                             <td>
                                                 <a class="btn btn-warning"

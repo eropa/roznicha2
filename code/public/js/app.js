@@ -2021,9 +2021,64 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "EditassComponent",
-  props: ['datagrs', 'data'],
+  props: ['datagrs', 'data', 'arrasostav'],
   data: function data() {
     return {
       tovar: null,
@@ -2035,20 +2090,24 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       editIdTovar: 0,
       newTovar: "",
       newBarCode: "",
-      image_ass: null
+      image_ass: null,
+      foundText: "",
+      listfound: []
     };
   },
   methods: {
+    // Соxранить данные
     saveData: function saveData() {
       var formData = new FormData();
       formData.append('file', this.image_ass);
+      formData.append('sostavass', JSON.stringify(this.sostavass));
+      console.log(this.sostavass);
 
       for (var _i = 0, _Object$entries = Object.entries(this.data); _i < _Object$entries.length; _i++) {
         var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
             key = _Object$entries$_i[0],
             value = _Object$entries$_i[1];
 
-        //console.log(key, value);
         formData.append(key, value);
       }
 
@@ -2061,17 +2120,51 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         alert('Сохранил');
       });
     },
+    //Предворительно показывает картинку
     handleFileUpload: function handleFileUpload() {
       this.image_ass = this.$refs.file.files[0];
       console.log(this.image_ass);
       console.log(this.$refs.file.files[0]);
+    },
+    // Показать модальноое окно с товаром
+    addsostav: function addsostav() {
+      $('#idShowToavar').modal('show');
+      event.preventDefault();
+    },
+    //поиск товара в базе по названию
+    foundTovar: function foundTovar() {
+      var _this = this;
+
+      this.listfound = [];
+      axios.post('/get/assortiment', {
+        foundText: this.foundText
+      }).then(function (response) {
+        _this.listfound = response.data;
+        console.log(response.data);
+      });
+    },
+    //Добовляем в состав
+    finishaddsosta: function finishaddsosta(id, name) {
+      $('#idShowToavar').modal('hide');
+      this.sostavass.push({
+        id: id,
+        name: name,
+        count: 0.00
+      });
+    },
+    // удалить позицию
+    deleteEvent: function deleteEvent(index) {
+      this.sostavass.splice(index, 1);
+      event.preventDefault();
+      event.preventDefault();
     }
   },
+  //При создане получаем данные
   created: function created() {
-    this.listgroup = this.datagrs; //  this.selectedGroup=this.data['id'];
-
-    this.tovar = this.data; // console.log('start');
-    // console.log(this.data);
+    this.listgroup = this.datagrs;
+    this.tovar = this.data;
+    this.sostavass = this.arrasostav;
+    console.log(this.arrasostav);
   }
 });
 
@@ -38541,64 +38634,6 @@ var render = function() {
           })
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "form-check" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.tovar["sostav"],
-                expression: "tovar['sostav']"
-              }
-            ],
-            staticClass: "form-check-input",
-            attrs: {
-              type: "checkbox",
-              id: "sostav",
-              name: "sostav",
-              value: "1"
-            },
-            domProps: {
-              checked: Array.isArray(_vm.tovar["sostav"])
-                ? _vm._i(_vm.tovar["sostav"], "1") > -1
-                : _vm.tovar["sostav"]
-            },
-            on: {
-              change: function($event) {
-                var $$a = _vm.tovar["sostav"],
-                  $$el = $event.target,
-                  $$c = $$el.checked ? true : false
-                if (Array.isArray($$a)) {
-                  var $$v = "1",
-                    $$i = _vm._i($$a, $$v)
-                  if ($$el.checked) {
-                    $$i < 0 && _vm.$set(_vm.tovar, "sostav", $$a.concat([$$v]))
-                  } else {
-                    $$i > -1 &&
-                      _vm.$set(
-                        _vm.tovar,
-                        "sostav",
-                        $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                      )
-                  }
-                } else {
-                  _vm.$set(_vm.tovar, "sostav", $$c)
-                }
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c(
-            "label",
-            { staticClass: "form-check-label", attrs: { for: "sostav" } },
-            [
-              _vm._v(
-                "Составной товар( состоить из нескольких элементов)\n            "
-              )
-            ]
-          )
-        ]),
-        _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
           _c("label", { attrs: { for: "selectGr" } }, [
             _vm._v("Группа товара")
@@ -38720,32 +38755,6 @@ var render = function() {
           })
         ]),
         _vm._v(" "),
-        _vm.tovar["sostav"]
-          ? _c("div", { staticClass: "form-group" }, [
-              _vm._m(0),
-              _vm._v(" "),
-              _c("table", { staticClass: "table table-hover" }, [
-                _vm._m(1),
-                _vm._v(" "),
-                _c(
-                  "tbody",
-                  _vm._l(_vm.sostavass, function(item) {
-                    return _c("tr", [
-                      _c("th", { attrs: { scope: "row" } }, [_vm._v("1*")]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("Mark")]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("Otto")]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("@mdo")])
-                    ])
-                  }),
-                  0
-                )
-              ])
-            ])
-          : _vm._e(),
-        _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
           _c("div", { staticClass: "custom-file" }, [
             _c("input", {
@@ -38759,13 +38768,175 @@ var render = function() {
               }
             }),
             _vm._v(" "),
-            _c(
-              "label",
-              { staticClass: "custom-file-label", attrs: { for: "file" } },
-              [_vm._v("Загрузить иконку")]
-            )
+            _c("br"),
+            _vm._v(" "),
+            _vm.tovar["image"] != null
+              ? _c("img", {
+                  attrs: {
+                    src: "/ass_tovar/" + _vm.tovar["image"],
+                    width: "300"
+                  }
+                })
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.tovar["image"] != null
+              ? _c(
+                  "label",
+                  { staticClass: "custom-file-label", attrs: { for: "file" } },
+                  [_vm._v(_vm._s(_vm.tovar["image"]))]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.tovar["image"] == null
+              ? _c(
+                  "label",
+                  { staticClass: "custom-file-label", attrs: { for: "file" } },
+                  [_vm._v("Загрузите")]
+                )
+              : _vm._e()
           ])
         ]),
+        _vm._v(" "),
+        _vm.tovar["image"] != null ? _c("br") : _vm._e(),
+        _vm._v(" "),
+        _vm.tovar["image"] != null ? _c("br") : _vm._e(),
+        _vm._v(" "),
+        _vm.tovar["image"] != null ? _c("br") : _vm._e(),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-check" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.tovar["sostav"],
+                expression: "tovar['sostav']"
+              }
+            ],
+            staticClass: "form-check-input",
+            attrs: {
+              type: "checkbox",
+              id: "sostav",
+              name: "sostav",
+              value: "1"
+            },
+            domProps: {
+              checked: Array.isArray(_vm.tovar["sostav"])
+                ? _vm._i(_vm.tovar["sostav"], "1") > -1
+                : _vm.tovar["sostav"]
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.tovar["sostav"],
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = "1",
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 && _vm.$set(_vm.tovar, "sostav", $$a.concat([$$v]))
+                  } else {
+                    $$i > -1 &&
+                      _vm.$set(
+                        _vm.tovar,
+                        "sostav",
+                        $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                      )
+                  }
+                } else {
+                  _vm.$set(_vm.tovar, "sostav", $$c)
+                }
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "label",
+            { staticClass: "form-check-label", attrs: { for: "sostav" } },
+            [
+              _vm._v(
+                "Составной товар( состоить из нескольких элементов)\n            "
+              )
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _vm.tovar["sostav"]
+          ? _c("div", { staticClass: "form-group" }, [
+              _c(
+                "button",
+                {
+                  on: {
+                    click: function($event) {
+                      return _vm.addsostav()
+                    }
+                  }
+                },
+                [_vm._v("Добавить +")]
+              ),
+              _vm._v(" "),
+              _vm._m(0),
+              _vm._v(" "),
+              _c("table", { staticClass: "table table-hover" }, [
+                _vm._m(1),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.sostavass, function(item, index) {
+                    return _c("tr", [
+                      _c("th", { attrs: { scope: "row" } }, [
+                        _vm._v(" " + _vm._s(item.id) + " ")
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(item.name))]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: item.count,
+                              expression: "item.count"
+                            }
+                          ],
+                          attrs: { type: "number" },
+                          domProps: { value: item.count },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(item, "count", $event.target.value)
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "button",
+                          {
+                            on: {
+                              click: function($event) {
+                                return _vm.deleteEvent(index)
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                            удалить\n                        "
+                            )
+                          ]
+                        )
+                      ])
+                    ])
+                  }),
+                  0
+                )
+              ])
+            ])
+          : _vm._e(),
         _vm._v(" "),
         _c("input", { attrs: { type: "hidden", name: "id" } }),
         _vm._v(" "),
@@ -38781,6 +38952,103 @@ var render = function() {
             }
           },
           [_vm._v("Обновить")]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "idShowToavar",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "exampleModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _vm._v("\n                    Поиск "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.foundText,
+                      expression: "foundText"
+                    }
+                  ],
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.foundText },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.foundText = $event.target.value
+                    }
+                  }
+                }),
+                _c(
+                  "button",
+                  {
+                    on: {
+                      click: function($event) {
+                        return _vm.foundTovar()
+                      }
+                    }
+                  },
+                  [_vm._v("Поиск")]
+                ),
+                _vm._v(" "),
+                _c("table", { staticClass: "table table-hover" }, [
+                  _vm._m(3),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.listfound, function(item_found) {
+                      return _c("tr", [
+                        _c("th", { attrs: { scope: "row" } }, [
+                          _vm._v(_vm._s(item_found.id))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(item_found.name))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c(
+                            "button",
+                            {
+                              on: {
+                                click: function($event) {
+                                  return _vm.finishaddsosta(
+                                    item_found.id,
+                                    item_found.name
+                                  )
+                                }
+                              }
+                            },
+                            [_vm._v("+")]
+                          )
+                        ])
+                      ])
+                    }),
+                    0
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(4)
+            ])
+          ]
         )
       ]
     )
@@ -38809,6 +39077,60 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Удалить")])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("Ассортимент")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("id")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Название")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("действие")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-secondary",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("Закрыть")]
+      )
     ])
   }
 ]

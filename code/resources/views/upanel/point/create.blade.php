@@ -4,7 +4,7 @@
     <div class="container">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Главная</a></li>
+                <li class="breadcrumb-item"><a href="{{ url('/home') }}">Главная</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('upaenl.point') }}">Торговые точки</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Создать</li>
             </ol>

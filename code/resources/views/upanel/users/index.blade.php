@@ -4,7 +4,7 @@
     <div class="container">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ url('/home') }}">Главная</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Пользователи</li>
             </ol>
         </nav>
@@ -28,10 +28,10 @@
                                     <th scope="col">id</th>
                                     <th scope="col">name</th>
                                     <th scope="col">email</th>
-                                    <th scope="col">role</th>
+                                    <th scope="col">роль</th>
                                     <th scope="col">фирма</th>
                                     <th scope="col">склад</th>
-                                    <th scope="col">event</th>
+                                    <th scope="col">действие</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -40,7 +40,17 @@
                                             <th scope="row">{{$data->id}}</th>
                                             <td>{{$data->name}}</td>
                                             <td>{{$data->email}}</td>
-                                            <td>{{$data->role}}</td>
+                                            <td>
+                                                @if($data->role=="admin")
+                                                    Супер пользовтаель
+                                                @endif
+                                                @if($data->role=="user")
+                                                    Пользователь
+                                                @endif
+                                                @if($data->role=="kassir")
+                                                    Кассир
+                                                @endif
+                                            </td>
                                             <?php
                                                 $dataUserComPoin=\App\services\getData::getDataComPoin($data->id);
 

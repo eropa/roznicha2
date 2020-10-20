@@ -4,7 +4,7 @@
     <div class="container">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Главная</a></li>
+                <li class="breadcrumb-item"><a href="{{ url('/home') }}">Главная</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Торговые точки</li>
             </ol>
         </nav>
@@ -28,7 +28,7 @@
                                 <tr>
                                     <th scope="col">id</th>
                                     <th scope="col">название точки</th>
-                                    <th scope="col">event</th>
+                                    <th scope="col">действие</th>
                                 </tr>
                                 </thead>
                                 <tbody>

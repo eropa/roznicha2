@@ -6,6 +6,7 @@ namespace App\services;
 
 use App\Models\Ass;
 use App\Models\Grass;
+use App\Sostav;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use phpDocumentor\Reflection\Types\Iterable_;
@@ -127,7 +128,7 @@ class AssService
         $modelAss->name=$request->input('name');
         $modelAss->barcode=$request->input('barcode');
         $modelAss->grass_id=$request->input('grass_id');
-        $modelAss->sostav=$request->input('sostav');
+        $modelAss->sostav=($request->input('sostav')==1?1:0);
         $modelAss->visible_ras=$request->input('visible_ras');
         $modelAss->price=$request->input('price');
         if($request->file('file')){
@@ -137,6 +138,19 @@ class AssService
             $file->move($destinationPath,$roundName);
             $modelAss->image=$roundName;
         }
+        //составной товар добовляем значение
+        $delet=Sostav::where('ass_id',$request->input('id'))->delete();
+        $arrySostavs=$request->input('sostavass');
+        $arrySostavs=json_decode($arrySostavs);
+      //  dd($arrySostavs);
+        foreach ($arrySostavs as $arrySostav){
+            $modelsostav=new Sostav();
+            $modelsostav->ass_id=$request->input('id');
+            $modelsostav->ass_ssos_id=$arrySostav->id;
+            $modelsostav->count=$arrySostav->count;
+            $modelsostav->save();
+        }
+        //
         return $modelAss->save();
     }
 

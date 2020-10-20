@@ -22,6 +22,7 @@
                         <editass-component
                             :data="{{$data}}"
                             :datagrs="{{$datagrs}}"
+                            :arrasostav="{{$arrasostav}}"
                             >
                         </editass-component>
                     </div>

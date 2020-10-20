@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>LIVРозница 2.0 (v1.6)</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    <b>LIV</b>Розница 2.0 (v1.5)
+                    <b>LIV</b>Розница 2.0 (v1.6)
                 </div>
             </div>
         </div>

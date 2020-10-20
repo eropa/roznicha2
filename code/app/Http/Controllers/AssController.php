@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Ass;
 use App\services\AssService;
+use App\Sostav;
 use Illuminate\Http\Request;
 
 class AssController extends Controller
@@ -30,8 +31,21 @@ class AssController extends Controller
         //dd($id);
         $data=AssService::dataAssId($id);
         $datagrs=AssService::listGrAll();
-        $datasass= AssService::getAllAss();
-        return view('upanel.ass.editass',['data'=>$data,'datagrs'=>$datagrs]);
+        $sostavs=Sostav::where('ass_id',$id)->get();
+        $arrasostav=array();
+        foreach ($sostavs as $sostav)
+        {
+            $arrasostav[]=array(
+                'id'=>$sostav->ass_ssos_id,
+                'name'=>$sostav->asstovar->name,
+                'count'=>$sostav->count);
+        }
+
+        $arrasostav=json_encode($arrasostav);
+        return view('upanel.ass.editass',[
+                        'data'=>$data,
+                        'datagrs'=>$datagrs,
+                        'arrasostav'=>$arrasostav]);
     }
 
     public function update(Request $request){
