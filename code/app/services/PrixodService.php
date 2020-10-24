@@ -38,6 +38,7 @@ class PrixodService
             $modelBody->ostatok=$data['counttovar'];
             $modelBody->price_zak=$data['zakryb'];
             $modelBody->price_prod=$data['prodryb'];
+            $modelBody->point_id=$request->input('selectSklad');
             $modelBody->save();
         }
         return $model->id;

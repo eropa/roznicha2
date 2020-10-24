@@ -86,6 +86,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('rasxod','RashController@index')->name('upaenl.rasxod');
         Route::get('rasxod/create','RashController@create')->name('upaenl.rasxod.create');
 
+        Route::get('report/ostatok','ReportController@get_ostatok')->name('upaenl.report.getostatok');
+        Route::post('report/ostatok','ReportController@post_ostatok')->name('upaenl.report.postostatok');
 
     });
     // получаем данные
@@ -102,4 +104,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('  /set/addrasxod','RashController@addrasxod');
     Route::post('  /get/rasxodtoday','RashController@getToday');
     Route::post('  /get/rasxodfound','RashController@getFound');
+
+    Route::post('    /get/skladlist','PointController@skladlist');
+
 });

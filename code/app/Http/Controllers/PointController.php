@@ -67,4 +67,10 @@ class PointController extends Controller
         PointService::destroyPoint($id);
         return redirect()->route('upaenl.point');
     }
+
+    public function skladlist(){
+        $datas=Point::all();
+        return response()->json($datas);
+    }
+
 }

@@ -41,6 +41,7 @@ class getData
             ->leftJoin('asses', 'grasses.id', '=', 'asses.grass_id')
             ->select('asses.id', 'asses.name','asses.barcode')
             ->where('grasses.company_id',$company->id)
+            ->where('asses.sostav',0)
             ->where('asses.name','LIKE','%'.$text.'%')
             ->get();
         return $datas;
@@ -109,7 +110,10 @@ class getData
 
     static function getAssRasNew(){
         $company=Auth::user()->getCompany();
-        $datas=Grass::where('company_id',$company->id)->where('parent_id',0)->get();
+        $datas=Grass::where('company_id',$company->id)
+            ->where('parent_id',0)
+            ->where('visible_ras',1)
+            ->get();
         if(is_null($datas)){
             return abort(404);
         }

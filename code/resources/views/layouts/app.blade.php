@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>LIVРозница 2.0 (v1.6)</title>
+    <title>LIVРозница 2.0 (v1.7)</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -86,6 +86,21 @@
                                            href="{{ route('upaenl.prixod') }}">Приходы</a>
                                         <a class="dropdown-item"
                                            href="{{ route('upaenl.rasxod') }}">Расходы</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle"
+                                       href="#"
+                                       id="navCompany"
+                                       role="button"
+                                       data-toggle="dropdown"
+                                       aria-haspopup="true"
+                                       aria-expanded="false">
+                                        Отчеты
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navCompany">
+                                        <a class="dropdown-item"
+                                           href="{{ route('upaenl.report.getostatok') }}">Остаток</a>
                                     </div>
                                 </li>
                         @endcan

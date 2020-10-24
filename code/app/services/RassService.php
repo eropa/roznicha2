@@ -6,6 +6,8 @@ namespace App\services;
 
 use App\Models\Rasb;
 use App\Models\Rash;
+use App\Models\Rassostav;
+use App\Sostav;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,8 +37,34 @@ class RassService
             $modelB->ass_id=$item['id'];
             $modelB->count=$item['count'];
             $modelB->price=$item['price'];
+            $modelB->point_id=(int)$point;
             $sum=$sum+$item['sum'];
             $modelB->save();
+
+            // Списываем составной товар
+            $is_sostav=Sostav::where('ass_id',$item['id'])->count();
+            if($is_sostav){
+                $sostav=Sostav::where('ass_id',$item['id'])->get();
+                foreach ($sostav as $itemsostav){
+                    $modelRasSostav=new Rassostav();
+                    $modelRasSostav->ras_id=$modelR->id;
+                    $modelRasSostav->ras_pos=$posRas;
+                    $modelRasSostav->ass_id=$itemsostav->ass_ssos_id;
+                    $modelRasSostav->count_ras=$item['count']*$itemsostav->count;
+                    $modelRasSostav->count_porchi=$item['count'];
+                    $modelRasSostav->point_id=(int)$point;
+                    $modelRasSostav->save();
+                }
+            }else{
+                $modelRasSostav=new Rassostav();
+                $modelRasSostav->ras_id=$modelR->id;
+                $modelRasSostav->ras_pos=$posRas;
+                $modelRasSostav->ass_id=$item['id'];
+                $modelRasSostav->count_ras=$item['count'];
+                $modelRasSostav->count_porchi=$item['count'];
+                $modelRasSostav->point_id=(int)$point;
+                $modelRasSostav->save();
+            }
         }
         $modelR->sum=$sum;
         $modelR->save();
