@@ -21,6 +21,7 @@ class ApiController extends Controller
                 'type'=>'group',
                 'name'=>$item->name,
                 'image'=>$item->image,
+                'price'=>0.00,
             );
         }
         $ass_lists=Ass::where('grass_id',$request->input('group_id'))->get();
@@ -30,6 +31,7 @@ class ApiController extends Controller
                 'type'=>'tovar',
                 'name'=>$ass_list->name,
                 'image'=>$ass_list->image,
+                'price'=>$ass_list->price,
             );
         }
         return response()->json($arReturn);
