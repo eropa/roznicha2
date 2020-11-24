@@ -66,8 +66,9 @@ class ZaivkaController extends Controller
             $bodyR->count=$item->count_toval;
             $bodyR->price=$price;
             $bodyR->point_id=$point->id;
-            $sum=$sum+round($price*$item->count_toval,4,2);
             $bodyR->save();
+            $sum=$sum+round($price*$item->count_toval,4,2);
+
         }
         $headR->sum=$sum;
         $headR->save();
