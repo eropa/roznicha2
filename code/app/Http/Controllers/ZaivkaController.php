@@ -58,14 +58,15 @@ class ZaivkaController extends Controller
         $sum=0;
         foreach ($data->bodyzaivka as $item){
             $i++;
+            $price=$item->ass->price;
             $bodyR=new Rasb();
             $bodyR->rash_id=$headR->id;
             $bodyR->pos_ass=$i;
             $bodyR->ass_id=$item->id;
             $bodyR->count=$item->count_toval;
-            $bodyR->price=$item->ass->price;
+            $bodyR->price=$price;
             $bodyR->point_id=$point->id;
-            $sum=$sum+round($item->ass->price*$item->count_toval,4,2);
+            $sum=$sum+round($price*$item->count_toval,4,2);
             $bodyR->save();
         }
         $headR->sum=$sum;
