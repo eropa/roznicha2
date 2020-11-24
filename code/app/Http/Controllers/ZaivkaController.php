@@ -70,6 +70,7 @@ class ZaivkaController extends Controller
         }
         $headR->sum=$sum;
         $headR->save();
+        $data=Zaivka::find($id);
         $data->status_zaivka=1;
         $data->save();
 
