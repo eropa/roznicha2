@@ -62,7 +62,7 @@ class ZaivkaController extends Controller
             $bodyR=new Rasb();
             $bodyR->rash_id=$headR->id;
             $bodyR->pos_ass=$i;
-            $bodyR->ass_id=$item->id;
+            $bodyR->ass_id=$item->ass_id;
             $bodyR->count=$item->count_toval;
             $bodyR->price=$price;
             $bodyR->point_id=$point->id;
