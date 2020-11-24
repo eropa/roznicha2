@@ -190,6 +190,8 @@ class AssService
 
     static function getNameId($id){
         $ass=Ass::find($id);
+        if(is_null($ass))
+            return '-';
         return $ass->name;
     }
 
