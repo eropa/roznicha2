@@ -93,6 +93,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('print/ras/{id}','PrintController@print_ras');
         Route::get('print/pri/{id}','PrintController@print_pri');
 
+        //Заявка
+        Route::get('zaivka','ZaivkaController@index')->name('upaenl.zaivka.index');
+        Route::get('zaivka/show/{id}','ZaivkaController@showzaivka')->name('upaenl.zaivka.show');
+        Route::get('zaivka/save/{id}','ZaivkaController@savezaivka')->name('upaenl.zaivka.save');
+
     });
     // получаем данные
     Route::post('/get/prixodcreate','PrihController@getDataCreate');

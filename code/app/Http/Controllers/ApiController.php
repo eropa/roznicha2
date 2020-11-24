@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Ass;
 use App\Models\Grass;
+use App\Models\Zaivka;
+use App\Models\Zaivkabody;
 use Illuminate\Http\Request;
 
 class ApiController extends Controller
 {
+
     public function getShop(Request $request){
         $arReturn=array();
         $group=Grass::query();
@@ -37,6 +40,7 @@ class ApiController extends Controller
         return response()->json($arReturn);
     }
 
+
     public function getCateg(Request $request){
         $datas=Grass::where('parent_id',0)->get();
         $arReturn=array();
@@ -48,4 +52,38 @@ class ApiController extends Controller
         }
         return response()->json($arReturn);
     }
+
+
+    public  function setZaivka(Request $request){
+        /* "datazaivka" => json_encode($datas),
+            "user_id"=>$user->id,
+            "comment"=>"-------"
+        */
+        $datas=$request->input('datazaivka');
+        $datas=json_decode($datas);
+        $user_id=$request->input('user_id');
+        $comment=$request->input('comment');
+
+        /**
+         * Шапка заявки
+         */
+        $head=new Zaivka();
+        $head->user_id=$user_id;
+        $head->comment_zaivka=$comment;
+        $head->save();
+
+        /*
+         * тело заявки
+         */
+        foreach ($datas as $item){
+            $body=new Zaivkabody();
+            $body->ass_id=$item->id;
+            $body->count_toval=$item->counttovar;
+            $body->zaivka_id= $head->id;
+            $body->save();
+        }
+
+        return $head->id;
+    }
+
 }
