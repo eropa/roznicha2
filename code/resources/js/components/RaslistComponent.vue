@@ -26,6 +26,7 @@
                     <th scope="col">Клиент</th>
                     <th scope="col">Торговая точка</th>
                     <th scope="col">Сумма</th>
+                    <th scope="col">Действие</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -44,6 +45,9 @@
                         </td>
                         <td>
                             {{item.sum_ras}} руб.
+                        </td>
+                        <td>
+                            <a  v-bind:href="'/upanel/print/ras/'+item.id" class="btn-success btn"  role="button">Печать</a>
                         </td>
                     </tr>
                 </tbody>

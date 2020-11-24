@@ -14,4 +14,8 @@ class Prih extends Model
     {
         return $this->belongsTo('App\Models\Point','point_id')->withDefault();
     }
+    public function bodypri()
+    {
+        return $this->hasMany('App\Models\Prib','prih_id','id');
+    }
 }

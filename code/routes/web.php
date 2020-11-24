@@ -87,7 +87,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('rasxod/create','RashController@create')->name('upaenl.rasxod.create');
 
         Route::get('report/ostatok','ReportController@get_ostatok')->name('upaenl.report.getostatok');
-        Route::post('report/ostatok','ReportController@post_ostatok')->name('upaenl.report.postostatok');
+        Route::post('report/ostatok/','ReportController@post_ostatok')->name('upaenl.report.postostatok');
+
+        //Печать документов
+        Route::get('print/ras/{id}','PrintController@print_ras');
+        Route::get('print/pri/{id}','PrintController@print_pri');
 
     });
     // получаем данные

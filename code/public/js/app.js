@@ -2493,6 +2493,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "PrixodlistComponent",
   props: ['listpoints', 'listpos'],
@@ -2559,6 +2564,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
 //
 //
 //
@@ -39962,6 +39971,20 @@ var render = function() {
                     _vm._s(item.point_name) +
                     "\n                "
                 )
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn-success btn",
+                    attrs: {
+                      href: "/upanel/print/pri/" + item.id,
+                      role: "button"
+                    }
+                  },
+                  [_vm._v("Печать")]
+                )
               ])
             ])
           }),
@@ -39986,7 +40009,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Поставщик")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Склад")])
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Склад")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Действие")])
       ])
     ])
   }
@@ -40133,6 +40158,20 @@ var render = function() {
                     _vm._s(item.sum_ras) +
                     " руб.\n                    "
                 )
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn-success btn",
+                    attrs: {
+                      href: "/upanel/print/ras/" + item.id,
+                      role: "button"
+                    }
+                  },
+                  [_vm._v("Печать")]
+                )
               ])
             ])
           }),
@@ -40157,7 +40196,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Торговая точка")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Сумма")])
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Сумма")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Действие")])
       ])
     ])
   }

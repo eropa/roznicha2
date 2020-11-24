@@ -26,6 +26,7 @@
                     <th scope="col">Дата опл.</th>
                     <th scope="col">Поставщик</th>
                     <th scope="col">Склад</th>
+                    <th scope="col">Действие</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -45,6 +46,10 @@
                     <td>
                         {{item.point_name}}
                     </td>
+                    <td>
+                        <a  v-bind:href="'/upanel/print/pri/'+item.id" class="btn-success btn"  role="button">Печать</a>
+                    </td>
+
 
                 </tr>
                 </tbody>

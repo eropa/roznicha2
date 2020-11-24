@@ -14,4 +14,8 @@ class Rash extends Model
     {
         return $this->belongsTo('App\Models\Point', 'point_id')->withDefault();
     }
+    public function bodyras()
+    {
+        return $this->hasMany('App\Models\Rasb','rash_id','id');
+    }
 }

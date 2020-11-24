@@ -36,4 +36,16 @@ class ApiController extends Controller
         }
         return response()->json($arReturn);
     }
+
+    public function getCateg(Request $request){
+        $datas=Grass::where('parent_id',0)->get();
+        $arReturn=array();
+        foreach ($datas as $data){
+            $arReturn[]=array(
+                'id'=>$data->id,
+                'name'=>$data->name,
+            );
+        }
+        return response()->json($arReturn);
+    }
 }
