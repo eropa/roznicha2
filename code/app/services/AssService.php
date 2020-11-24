@@ -188,4 +188,9 @@ class AssService
         return $datas;
     }
 
+    static function getNameId($id){
+        $ass=Ass::find($id);
+        return $ass->name;
+    }
+
 }

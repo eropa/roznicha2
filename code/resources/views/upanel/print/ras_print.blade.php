@@ -47,7 +47,7 @@
                 @foreach($data->bodyras as $item)
                 <tr>
                     <th scope="row">{{$item->pos_ass }}</th>
-                    <td>{{$item->ass->name }}</td>
+                    <td>{{ \App\services\AssService::getNameId($item->ass_id) }}</td>
                     <td>{{$item->count }}</td>
                     <td>{{$item->price }}</td>
                     <td>{{ round($item->price *$item->count ,4,2) }}</td>
