@@ -26,7 +26,8 @@ class RashController extends Controller
     public function getRasass(Request $request){
         $id=$request->input('id');
         $datas=getData::getAssGr($id);
-        return response()->json($datas);
+        $datagr=getData::getAssGrid($id);
+        return response()->json(['asstovar'=>$datas,'datagr'=>$datagr]);
     }
 
     public function getRasassMain(){

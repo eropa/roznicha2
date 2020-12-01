@@ -128,6 +128,14 @@ class getData
         return $datas;
     }
 
+    static function getAssGrid($id){
+        $datas=Grass::where('parent_id',$id)->get();
+        if(is_null($datas)){
+            return abort(404);
+        }
+        return $datas;
+    }
+
     static function getDataComPoin($user_id){
         $data=Userpoint::where('user_id',$user_id)->first();
         return $data;

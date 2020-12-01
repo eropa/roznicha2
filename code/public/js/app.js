@@ -2870,15 +2870,23 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/get/rasass', {
         id: id
       }).then(function (response) {
-        console.log(response.data);
+        console.log(response.data['asstovar']);
         _this.listgrass = [];
-        response.data.forEach(function (element) {
+        response.data['asstovar'].forEach(function (element) {
           _this.listgrass.push({
             id: element.id,
             name: element.name,
             price: element.price,
             image: element.image,
             type: 1
+          });
+        });
+        response.data['datagr'].forEach(function (element) {
+          _this.listgrass.push({
+            id: element.id,
+            name: element.name,
+            image: element.image,
+            type: 0
           });
         });
         _this.viewBtnMain = 1;

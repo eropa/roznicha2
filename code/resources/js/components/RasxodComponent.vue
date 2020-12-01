@@ -193,10 +193,10 @@
                 axios.post('/get/rasass', {
                     id:id,
                 }).then ((response)=>{
-                    console.log(response.data);
+                    console.log(response.data['asstovar']);
 
                     this.listgrass=[];
-                    response.data.forEach((element)=>{
+                    response.data['asstovar'].forEach((element)=>{
                             this.listgrass.push({
                                 id:element.id,
                                 name:element.name,
@@ -206,6 +206,17 @@
                             })
                         }
                     )
+
+                    response.data['datagr'].forEach((element)=>{
+                            this.listgrass.push({
+                                id:element.id,
+                                name:element.name,
+                                image:element.image,
+                                type:0,
+                            })
+                        }
+                    )
+
                     this.viewBtnMain=1;
                 });
             },
