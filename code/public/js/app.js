@@ -2076,6 +2076,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "EditassComponent",
   props: ['datagrs', 'data', 'arrasostav'],
@@ -38905,6 +38908,12 @@ var render = function() {
               : _vm._e()
           ])
         ]),
+        _vm._v(" "),
+        _vm.tovar["image"] != null ? _c("br") : _vm._e(),
+        _vm._v(" "),
+        _vm.tovar["image"] != null ? _c("br") : _vm._e(),
+        _vm._v(" "),
+        _vm.tovar["image"] != null ? _c("br") : _vm._e(),
         _vm._v(" "),
         _vm.tovar["image"] != null ? _c("br") : _vm._e(),
         _vm._v(" "),

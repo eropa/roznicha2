@@ -63,6 +63,9 @@
             <br v-if="tovar['image']!=null">
             <br v-if="tovar['image']!=null">
             <br v-if="tovar['image']!=null">
+            <br v-if="tovar['image']!=null">
+            <br v-if="tovar['image']!=null">
+            <br v-if="tovar['image']!=null">
 
             <div class="form-check">
                 <input type="checkbox"
