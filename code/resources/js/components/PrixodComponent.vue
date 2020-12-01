@@ -169,7 +169,7 @@
                             counttovar:0.000,
                             zakryb:0.00,
                             zakutog:0.00,
-                            prodryb:0.00,
+                            prodryb:dataItem.price,
                             produtogo:0.00,
                         }
                     );

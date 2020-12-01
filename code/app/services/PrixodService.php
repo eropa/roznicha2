@@ -4,6 +4,7 @@
 namespace App\services;
 
 
+use App\Models\Ass;
 use App\Models\Prib;
 use App\Models\Prih;
 use Carbon\Carbon;
@@ -40,6 +41,13 @@ class PrixodService
             $modelBody->price_prod=$data['prodryb'];
             $modelBody->point_id=$request->input('selectSklad');
             $modelBody->save();
+
+
+            $tovar=Ass::find($data['id']);
+            if(!is_null($tovar)){
+                $tovar->price=$data['prodryb'];
+                $tovar->save();
+            }
         }
         return $model->id;
 
