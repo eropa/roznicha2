@@ -52,4 +52,17 @@ class PrihController extends Controller
         $datas=getData::getPrixonFound($request);
         return response()->json($datas);
     }
+
+    public function delete($id){
+        Prib::where('prih_id',$id)->delete();
+        Prih::destroy($id);
+        return redirect()->back()->with('deletes', 'Приxод №'.$id.' удален!');
+    }
+
+    public function edit($id){
+        return view('upanel.prixod.edit');
+    }
+
+
+
 }

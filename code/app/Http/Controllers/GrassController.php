@@ -53,6 +53,12 @@ class GrassController extends Controller
     }
 
     public function delete($id){
+        $count=Ass::where('grass_id',$id)->count();
+        if($count>0)
+            return redirect()->back()->with('status', 'Есть товар в этой группе');
+        $count=Grass::where('parent_id',$id)->count();
+        if($count>0)
+            return redirect()->back()->with('status', 'Есть группа в этой группе');
         AssService::deleteGr($id);
         return redirect()->route('upaenl.ass');
     }

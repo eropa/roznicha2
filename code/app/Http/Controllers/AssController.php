@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ass;
+use App\Models\Prib;
+use App\Models\Rasb;
 use App\services\AssService;
 use App\Sostav;
 use Illuminate\Http\Request;
@@ -54,6 +56,12 @@ class AssController extends Controller
     }
 
     public function delete($id){
+        $count=Rasb::where('ass_id',$id)->count();
+        if($count>0)
+            return redirect()->back()->with('status', 'Товар есть в расxоде!');
+        $count=Prib::where('ass_id',$id)->count();
+        if($count>0)
+            return redirect()->back()->with('status', 'Товар есть в приxоде!');
         AssService::deleteAss($id);
         return redirect()->route('upaenl.ass');
     }

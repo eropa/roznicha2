@@ -48,6 +48,8 @@
                     </td>
                     <td>
                         <a  v-bind:href="'/upanel/print/pri/'+item.id" class="btn-success btn"  role="button">Печать</a>
+                        <a  v-bind:href="'/upanel/prixod/edit/'+item.id" class="btn-warning btn"  role="button">Ред.</a>
+                        <a  v-bind:href="'/upanel/prixod/delete/'+item.id" class="btn-danger btn"  role="button">Удал.</a>
                     </td>
 
 

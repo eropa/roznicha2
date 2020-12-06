@@ -2501,6 +2501,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "PrixodlistComponent",
   props: ['listpoints', 'listpos'],
@@ -40001,6 +40003,30 @@ var render = function() {
                     }
                   },
                   [_vm._v("Печать")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn-warning btn",
+                    attrs: {
+                      href: "/upanel/prixod/edit/" + item.id,
+                      role: "button"
+                    }
+                  },
+                  [_vm._v("Ред.")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn-danger btn",
+                    attrs: {
+                      href: "/upanel/prixod/delete/" + item.id,
+                      role: "button"
+                    }
+                  },
+                  [_vm._v("Удал.")]
                 )
               ])
             ])

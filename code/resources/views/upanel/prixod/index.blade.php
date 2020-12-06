@@ -2,6 +2,12 @@
 
 @section('content')
     <div class="container">
+        @if (session('deletes'))
+            <div class="alert alert-danger">
+                {{ session('deletes') }}
+            </div>
+        @endif
+
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Главная</a></li>

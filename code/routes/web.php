@@ -82,6 +82,8 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('prixod','PrihController@index')->name('upaenl.prixod');
         Route::get('prixod/create','PrihController@create')->name('upaenl.prixod.create');
+        Route::get('prixod/delete/{id}','PrihController@delete');
+        Route::get('prixod/edit/{id}','PrihController@edit');
 
         Route::get('rasxod','RashController@index')->name('upaenl.rasxod');
         Route::get('rasxod/create','RashController@create')->name('upaenl.rasxod.create');
