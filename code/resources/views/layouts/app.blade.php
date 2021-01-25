@@ -86,8 +86,10 @@
                                            href="{{ route('upaenl.prixod') }}">Приходы</a>
                                         <a class="dropdown-item"
                                            href="{{ route('upaenl.rasxod') }}">Расходы</a>
+                                        <!--
                                         <a class="dropdown-item"
                                            href="{{ route('upaenl.zaivka.index') }}">Заявка с сайта</a>
+                                           -->
                                     </div>
                                 </li>
                                 <li class="nav-item dropdown">
