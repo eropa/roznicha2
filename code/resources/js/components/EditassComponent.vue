@@ -108,6 +108,15 @@
 
 
 
+            <div class="form-group">
+                <label >Описание товара</label>
+                <ckeditor v-model="editorData">
+                </ckeditor>
+            </div>
+
+
+
+
             <input type="hidden" name="id" >
             <button type="button" class="btn btn-primary" v-on:click="saveData()" >Обновить</button>
         </form>
@@ -160,6 +169,7 @@
 <script>
     export default {
         name: "EditassComponent",
+
         props: ['datagrs','data','arrasostav'],
         data() {
             return {
@@ -168,6 +178,7 @@
                 sostavass:[],
                 editId:0,
                 listtovar:[],
+                editorData:'',
                 selectedGroup:0,
                 editIdTovar:0,
                 newTovar:"",
@@ -182,6 +193,7 @@
             saveData: function () {
                 let formData = new FormData();
                 formData.append('file', this.image_ass);
+                formData.append('editorData',this.editorData);
                 formData.append('sostavass',JSON.stringify(this.sostavass) );
                 console.log(this.sostavass);
                 for (const [key, value] of Object.entries(this.data)) {
@@ -234,7 +246,8 @@
             this.listgroup=this.datagrs;
             this.tovar=this.data;
             this.sostavass=this.arrasostav;
-            console.log(this.arrasostav);
+            this.editorData=this.tovar['html_about'];
+            console.log(this.data);
         },
     }
 </script>

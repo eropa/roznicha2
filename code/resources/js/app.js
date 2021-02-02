@@ -5,8 +5,11 @@
  */
 
 require('./bootstrap');
-
+import CKEditor from  'ckeditor4-vue';
 window.Vue = require('vue');
+
+
+Vue.use(CKEditor);
 
 /**
  * The following block of code may be used to automatically register your
@@ -35,4 +38,6 @@ Vue.component('rostatok-component',require('./components/RostatokComponent.vue')
 const app = new Vue({
     el: '#app',
 });
+
+
 

@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>LIVРозница 2.0 (v1.9.2)</title>
+    <title>LIVРозница 2.0 (v1.9.3)</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>

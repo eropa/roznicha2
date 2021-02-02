@@ -86,4 +86,12 @@ class ApiController extends Controller
         return $head->id;
     }
 
+
+    public function getInfoTovar(Request $request){
+        $model=Ass::find($request->input('id'));
+        if(is_null($model))
+            return  response()->json(null);
+        return response()->json($model);
+    }
+
 }

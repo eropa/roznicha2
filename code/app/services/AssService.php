@@ -128,6 +128,7 @@ class AssService
         $modelAss->name=$request->input('name');
         $modelAss->barcode=$request->input('barcode');
         $modelAss->grass_id=$request->input('grass_id');
+        $modelAss->html_about=$request->input('editorData');
       //  dd($request->input('sostav'));
         $modelAss->sostav=($request->input('sostav')==true?1:0);
         $modelAss->visible_ras=$request->input('visible_ras');
