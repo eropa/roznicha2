@@ -40593,7 +40593,7 @@ var render = function() {
                   }
                 ],
                 staticStyle: { width: "80px" },
-                attrs: { type: "text", readonly: "" },
+                attrs: { type: "number" },
                 domProps: { value: _vm.countAdd },
                 on: {
                   input: function($event) {

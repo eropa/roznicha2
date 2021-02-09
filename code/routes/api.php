@@ -20,8 +20,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/getshop','ApiController@getShop');
 
+Route::post('/getparent','ApiController@getParent');
+
+
 Route::post('/getinfotovar','ApiController@getInfoTovar');
 
-Route::post('/getcategshop','ApiController@getCateg');
+Route::post('/getcategshop','ApiController@getCategShops');
 
 Route::post('/setzaivka','ApiController@setZaivka');

@@ -80,7 +80,7 @@
                     </div>
                     <div class="modal-body">
                         Количество товара : <button class="btn btn-success" v-on:click="miusCount()"> - </button>
-                        <input type="text" readonly v-model="countAdd" style="width:80px" >
+                        <input type="number"  v-model="countAdd" style="width:80px" >
                         <button class="btn btn-success" v-on:click="addCount()"> + </button>
                         <hr>
                         <button class="btn btn-success" v-if="countAdd>0" v-on:click="addAssRas()">Добавить в расход</button>

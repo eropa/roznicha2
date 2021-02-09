@@ -54,7 +54,28 @@ class ApiController extends Controller
     }
 
 
-    public  function setZaivka(Request $request){
+    public function getCategShops(Request $request){
+        $datas=self::getDepth($request->input('id'));
+        return json_encode($datas);
+    }
+
+    static function  getDepth($parent_id) {
+        return $parent_id;
+        $categories= Categories::find($parent_id);
+
+        if ($categories) {
+            if ($categories->parent_id == 0) {
+                return $categories->category_name;
+            } else {
+                return self::getDepth($categories->parent_id);
+            }
+        }
+
+    }
+
+
+
+        public  function setZaivka(Request $request){
         /* "datazaivka" => json_encode($datas),
             "user_id"=>$user->id,
             "comment"=>"-------"
