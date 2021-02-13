@@ -66,8 +66,8 @@ class ApiController extends Controller
         if ($categories) {
             if ($categories->parent_id == 0) {
                 return $categories->category_name;
-            } else {
-                return self::getDepth($categories->parent_id);
+            /*} else {
+                return self::getDepth($categories->parent_id);*/
             }
         }
 
