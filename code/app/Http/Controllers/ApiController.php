@@ -60,9 +60,8 @@ class ApiController extends Controller
     }
 
     static function  getDepth($parent_id) {
-        return $parent_id;
+       // return $parent_id;
         $categories= Categories::find($parent_id);
-
         if ($categories) {
             if ($categories->parent_id == 0) {
                 return $categories->category_name;
@@ -70,6 +69,7 @@ class ApiController extends Controller
                 return self::getDepth($categories->parent_id);*/
             }
         }
+        return "";
 
     }
 
