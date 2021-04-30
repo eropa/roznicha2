@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Ass;
 use App\Models\Grass;
+use App\Models\Rash;
 use App\Models\Zaivka;
 use App\Models\Zaivkabody;
 use Illuminate\Http\Request;
@@ -114,5 +115,25 @@ class ApiController extends Controller
             return  response()->json(null);
         return response()->json($model);
     }
+
+    public function getStatus(Request $request){
+        $arrReturn=array();
+        $dataArra=json_decode($request->input('orders'));
+        foreach ($dataArra as $item){
+            $ras=Rash::where('zaivka',$item)->first();
+            if(!is_null($ras)){
+                $status=$ras->status->name;
+                $arrReturn[]=array(['id'=>$item,'status'=>$status]);
+            }else{
+                $count=Zaivka::where('id',$item)->count();
+                if($count>0)
+                    $arrReturn[]=array(['id'=>$item,'status'=>'Отправлена']);
+                if($count==0)
+                    $arrReturn[]=array(['id'=>$item,'status'=>'Удалена']);
+            }
+        }
+        return response()->json($arrReturn);
+    }
+
 
 }

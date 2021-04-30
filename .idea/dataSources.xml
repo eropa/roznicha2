@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="c4sklad@10.1.0.7" uuid="192a63d5-12d7-4783-ba90-e8cdae94ed5a">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://10.1.0.7:3306/c4sklad</jdbc-url>
+      <driver-properties>
+        <property name="serverTimezone" value="UT" />
+      </driver-properties>
+    </data-source>
+  </component>
+</project>

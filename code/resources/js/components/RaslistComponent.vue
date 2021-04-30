@@ -25,6 +25,8 @@
                     <th scope="col">Дата</th>
                     <th scope="col">Клиент</th>
                     <th scope="col">Торговая точка</th>
+                    <th scope="col">Статус</th>
+                    <th scope="col">Заявка</th>
                     <th scope="col">Сумма</th>
                     <th scope="col">Действие</th>
                 </tr>
@@ -43,6 +45,21 @@
                         <td>
                             {{item.point}}
                         </td>
+                        <td  v-if="item.status_id=='Касса'">
+                            {{item.status_id}}
+                        </td>
+                        <td v-if="item.status_id!='Касса'">
+                            {{item.status_id}}
+                            <br>
+                            <select @change="onChange($event)" :data-id="item.id">
+                                <option :value="0" selected>Выберите статус</option>
+                                <option v-for="(status, index) in statuslist">{{status.name}}</option>
+                            </select>
+                        </td>
+                        <td>
+                            {{item.zaivka}}
+                        </td>
+
                         <td>
                             {{item.sum_ras}} руб.
                         </td>
@@ -60,7 +77,7 @@
 <script>
     export default {
         name: "RaslistComponent",
-        props: ['kassir'],
+        props: ['kassir','statuslist'],
         data() {
             return {
                 data1:null,
@@ -82,6 +99,20 @@
                     this.rasxList=response.data;
                 });
             },
+            onChange(event) {
+                console.log(event.target.value)
+                var statusChange=event.target.value;
+                var idRecord1 = event.target.getAttribute('data-id');
+                if(statusChange==0)
+                    return 1;
+
+                axios.post('/upanel/rasxod/changestatus', {
+                    'status':statusChange,
+                    'idrecord':idRecord1,
+                }).then ((response)=>{
+                    alert('Статус поменяли')
+                });
+            }
         },
         created: function () {
             // `this` указывает на экземпляр vm

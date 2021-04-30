@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Rash;
+use App\Models\Status;
 use App\services\getData;
 use App\services\RassService;
 use Illuminate\Http\Request;
@@ -50,5 +51,16 @@ class RashController extends Controller
         return response()->json($datas);
     }
 
+
+    public function changestatus(Request $request){
+        $a=$request->all();
+        $status=Status::where('name',$request->input('status'))->first();
+        if(is_null($status))
+            return 1;
+        $ras=Rash::find($request->input('idrecord'));
+        $ras->status_id=$status->id;
+        $ras->save();
+        return 1;
+    }
 
 }

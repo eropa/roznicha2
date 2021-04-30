@@ -18,4 +18,8 @@ class Rash extends Model
     {
         return $this->hasMany('App\Models\Rasb','rash_id','id');
     }
+    public function status()
+    {
+        return $this->belongsTo('App\Models\Status', 'status_id','id')->withDefault();
+    }
 }

@@ -35,6 +35,8 @@
                                     <td>{{ $data->comment_zaivka }}</td>
                                     <td>
                                         <a href="{{ route('upaenl.zaivka.show',["id" => $data->id ])  }}">Оформить</a>
+                                        /
+                                        <a href="{{ route('upaenl.zaivka.delete',["id" => $data->id ])  }}">Удалить</a>
                                     </td>
                                 </tr>
                             @endforeach

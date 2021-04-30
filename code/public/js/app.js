@@ -2640,9 +2640,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "RaslistComponent",
-  props: ['kassir'],
+  props: ['kassir', 'statuslist'],
   data: function data() {
     return {
       data1: null,
@@ -2664,6 +2681,18 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         _this.prixodList = [];
         _this.rasxList = response.data;
+      });
+    },
+    onChange: function onChange(event) {
+      console.log(event.target.value);
+      var statusChange = event.target.value;
+      var idRecord1 = event.target.getAttribute('data-id');
+      if (statusChange == 0) return 1;
+      axios.post('/upanel/rasxod/changestatus', {
+        'status': statusChange,
+        'idrecord': idRecord1
+      }).then(function (response) {
+        alert('Статус поменяли');
       });
     }
   },
@@ -40248,6 +40277,59 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
+              item.status_id == "Касса"
+                ? _c("td", [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(item.status_id) +
+                        "\n                    "
+                    )
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              item.status_id != "Касса"
+                ? _c("td", [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(item.status_id) +
+                        "\n                        "
+                    ),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        attrs: { "data-id": item.id },
+                        on: {
+                          change: function($event) {
+                            return _vm.onChange($event)
+                          }
+                        }
+                      },
+                      [
+                        _c(
+                          "option",
+                          { attrs: { selected: "" }, domProps: { value: 0 } },
+                          [_vm._v("Выберите статус")]
+                        ),
+                        _vm._v(" "),
+                        _vm._l(_vm.statuslist, function(status, index) {
+                          return _c("option", [_vm._v(_vm._s(status.name))])
+                        })
+                      ],
+                      2
+                    )
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("td", [
+                _vm._v(
+                  "\n                        " +
+                    _vm._s(item.zaivka) +
+                    "\n                    "
+                )
+              ]),
+              _vm._v(" "),
               _c("td", [
                 _vm._v(
                   "\n                        " +
@@ -40291,6 +40373,10 @@ var staticRenderFns = [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Клиент")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Торговая точка")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Статус")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Заявка")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Сумма")]),
         _vm._v(" "),

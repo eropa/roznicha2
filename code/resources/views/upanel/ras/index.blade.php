@@ -20,7 +20,10 @@
                     </div>
 
                     <div class="card-body">
-                        <rasxodlist-component :kassir="{{$kassir}}">
+                        <?php
+                            $status=\App\Models\Status::all()
+                        ?>
+                        <rasxodlist-component :kassir="{{$kassir}}" :statuslist="{{$status}}">
                         </rasxodlist-component>
                     </div>
                 </div>

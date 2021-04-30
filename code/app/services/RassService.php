@@ -84,6 +84,8 @@ class RassService
                 'date_cr'=>date_format($data->created_at, 'Y-m-d H:i:s'),
                 'pos'=>$data->pos->name,
                 'point'=>$data->point->name,
+                'status_id'=>($data->status_id==99?"Касса":$data->status->name),
+                'zaivka'=>$data->zaivka,
                 'sum_ras'=>$data->sum,
             ]);
         }

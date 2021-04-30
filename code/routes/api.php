@@ -28,3 +28,5 @@ Route::post('/getinfotovar','ApiController@getInfoTovar');
 Route::post('/getcategshop','ApiController@getCategShops');
 
 Route::post('/setzaivka','ApiController@setZaivka');
+
+Route::post('/getstatus','ApiController@getStatus');

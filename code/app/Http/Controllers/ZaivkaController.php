@@ -8,6 +8,7 @@ use App\Models\Pos;
 use App\Models\Rasb;
 use App\Models\Rash;
 use App\Models\Zaivka;
+use App\Models\Zaivkabody;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -52,6 +53,8 @@ class ZaivkaController extends Controller
         $headR->pos_id=$pos->id;
         $headR->point_id=$point->id;
         $headR->company_id=$company->id;
+        $headR->status_id=1;
+        $headR->zaivka=$id;
         $headR->sum=0;
         $headR->save();
         $i=0;
@@ -77,6 +80,13 @@ class ZaivkaController extends Controller
         $data->save();
 
         return redirect()->route('upaenl.rasxod');
+    }
+
+
+    public function delete($id){
+        Zaivkabody::where('zaivka_id',$id)->delete();
+        Zaivka::destroy($id);
+        return redirect()->back();
     }
 
 }

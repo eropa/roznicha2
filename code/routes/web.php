@@ -86,6 +86,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('prixod/edit/{id}','PrihController@edit');
 
         Route::get('rasxod','RashController@index')->name('upaenl.rasxod');
+        Route::post('rasxod/changestatus','RashController@changestatus')->name('upaenl.rasxod.changestatus');
         Route::get('rasxod/create','RashController@create')->name('upaenl.rasxod.create');
 
         Route::get('report/ostatok','ReportController@get_ostatok')->name('upaenl.report.getostatok');
@@ -99,6 +100,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('zaivka','ZaivkaController@index')->name('upaenl.zaivka.index');
         Route::get('zaivka/show/{id}','ZaivkaController@showzaivka')->name('upaenl.zaivka.show');
         Route::get('zaivka/save/{id}','ZaivkaController@savezaivka')->name('upaenl.zaivka.save');
+        Route::get('zaivka/delete/{id}','ZaivkaController@delete')->name('upaenl.zaivka.delete');
 
     });
     // получаем данные
