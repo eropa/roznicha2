@@ -119,6 +119,7 @@ class AssService
         $modelAss->name=$request->input('name');
         $modelAss->barcode=$request->input('barcode');
         $modelAss->grass_id=$request->input('grass_id');
+        $modelAss->html_about=$request->input('html_about');
         $modelAss->sostav=(is_null($request->input('sostav'))?0:1);
         return $modelAss->save();
     }

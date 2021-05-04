@@ -25,6 +25,7 @@ class AssController extends Controller
     }
 
     public function story(Request $request){
+        //dd($request);
         AssService::createAss($request);
         return redirect()->route('upaenl.ass');
     }

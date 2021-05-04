@@ -50,6 +50,16 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="form-group">
+                                <label for="inputName">Описание товара</label>
+                                <input type="text" class="form-control"
+                                       id="inputName"
+                                       name="html_about"
+                                       value="Описание товара"
+                                       required
+                                       readonly
+                                       placeholder="Название товара.">
+                            </div>
                             @csrf
                             <button type="button" class="btn btn-primary" onclick="clSubmit()">Создать</button>
                         </form>

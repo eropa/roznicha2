@@ -7,7 +7,7 @@
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://10.1.0.7:3306/c4sklad</jdbc-url>
       <driver-properties>
-        <property name="serverTimezone" value="UT" />
+        <property name="serverTimezone" value="UTC" />
       </driver-properties>
     </data-source>
   </component>
