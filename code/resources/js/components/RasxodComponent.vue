@@ -16,6 +16,10 @@
                             <label>Сумма</label>
                             <input type="text" class="form-control"  v-model="sumRas" readonly>
                         </div>
+                        <div class="form-group">
+                            <label>Клиенты</label>
+                            <input type="text" class="form-control"  v-model="clientPhone" >
+                        </div>
                         <button class="btn btn-success" v-on:click="showRas">Создать</button><br><br>
                         <button  class="btn btn-danger" v-on:click="notSave()">Отмена</button>
                     </div>
@@ -182,6 +186,7 @@
                 countAdd:0,
                 selectDataId:0,
                 selectData:null,
+                clientPhone:"",
             }
         },
         methods: {
@@ -298,6 +303,7 @@
                 axios.post('/set/addrasxod', {
                     selectPos:this.pos,
                     selectSklad:this.point,
+                    clientPhone:this.clientPhone,
                     listrasxod:this.listrasxod,
                 }).then ((response)=>{
                     $('#myModalRasxod').modal('hide');

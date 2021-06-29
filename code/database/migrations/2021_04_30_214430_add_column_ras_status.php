@@ -14,10 +14,8 @@ class AddColumnRasStatus extends Migration
     public function up()
     {
         Schema::table('rashes', function (Blueprint $table) {
-            $table->integer('status_id')->default('99');
-            $table->index('status');
-            $table->integer('zaivka')->default('0');
-            $table->index('zaivka');
+            $table->bigInteger('status_id')->default('99');
+            $table->bigInteger('zaivka')->default('0');
         });
     }
 

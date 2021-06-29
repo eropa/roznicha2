@@ -2888,6 +2888,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "RasxodComponent",
   props: ['pos', 'point', 'assstart'],
@@ -2900,7 +2904,8 @@ __webpack_require__.r(__webpack_exports__);
       modalData: null,
       countAdd: 0,
       selectDataId: 0,
-      selectData: null
+      selectData: null,
+      clientPhone: ""
     };
   },
   methods: {
@@ -3007,6 +3012,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/set/addrasxod', {
         selectPos: this.pos,
         selectSklad: this.point,
+        clientPhone: this.clientPhone,
         listrasxod: this.listrasxod
       }).then(function (response) {
         $('#myModalRasxod').modal('hide');
@@ -40490,6 +40496,32 @@ var render = function() {
                         return
                       }
                       _vm.sumRas = $event.target.value
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", [_vm._v("Клиенты")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.clientPhone,
+                      expression: "clientPhone"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.clientPhone },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.clientPhone = $event.target.value
                     }
                   }
                 })

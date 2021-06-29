@@ -102,6 +102,21 @@ Route::middleware(['auth'])->group(function () {
         Route::get('zaivka/save/{id}','ZaivkaController@savezaivka')->name('upaenl.zaivka.save');
         Route::get('zaivka/delete/{id}','ZaivkaController@delete')->name('upaenl.zaivka.delete');
 
+        //Клиенты
+
+        Route::get('clients','ClientController@index')->name('upaenl.clients');
+        Route::get('client/add','ClientController@create')->name('upaenl.clients.add');
+        Route::get('client/delete/{id}','ClientController@delete')->name('upaenl.clients.delete');
+        Route::get('client/edit/{id}','ClientController@edit')->name('upaenl.clients.edit');
+        Route::post('client/store','ClientController@store')->name('upaenl.clients.store');
+        Route::post('client/update','ClientController@update')->name('upaenl.clients.update');
+
+        Route::get('report/client','ReportController@reportClient')->name('upaenl.report.client');
+        Route::post('report/client','ReportController@reportClientPost')->name('upaenl.report.clientpost');
+        Route::get('report/statusorder','ReportController@statusOrder')->name('upaenl.report.statusOrder');
+
+
+
     });
     // получаем данные
     Route::post('/get/prixodcreate','PrihController@getDataCreate');

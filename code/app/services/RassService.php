@@ -4,6 +4,7 @@
 namespace App\services;
 
 
+use App\Models\Client;
 use App\Models\Rasb;
 use App\Models\Rash;
 use App\Models\Rassostav;
@@ -15,6 +16,27 @@ use Illuminate\Support\Facades\Auth;
 class RassService
 {
     static function create(Request $request){
+
+
+
+
+
+        if($request->input('clientPhone')==""){
+            $idClient=0;
+        }else{
+            $dataClinet=Client::where('phone',$request->input('clientPhone'))->first();
+            if(is_null($dataClinet)){
+                $dataClinet=new Client();
+                $dataClinet->name='-';
+                $dataClinet->phone=$request->input('clientPhone');
+                $dataClinet->email='-';
+                $dataClinet->save();
+            }
+            $idClient=$dataClinet->id;
+        }
+
+
+
         $pos=$request->input('selectPos');
         $point=$request->input('selectSklad');
         $listrasxod=$request->input('listrasxod');
@@ -28,6 +50,7 @@ class RassService
         $modelR->point_id=$point['id'];
         $modelR->company_id=$company->id;
         $modelR->sum=0;
+        $modelR->client=$idClient;
         $modelR->save();
         foreach ($listrasxod as $item){
             $posRas++;

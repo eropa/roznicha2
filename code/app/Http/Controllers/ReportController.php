@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ass;
+use App\Models\Client;
 use App\Models\Prib;
+use App\Models\Rash;
 use App\Models\Rassostav;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -42,5 +44,28 @@ class ReportController extends Controller
         return $sum;
     }
 
+    public function reportClient(){
+        return view('upanel.report.client');
+    }
+
+    public function statusOrder(){
+        return view('upanel.crm.index');
+    }
+
+    public function reportClientPost(Request $request){
+
+        if($request->input('type1')==1){
+            $datas = Client::all();
+            $data1=$request->input('data1');
+            $data2=$request->input('data2');
+            return view('upanel.report.clientrep1',['datas'=>$datas,'data1'=>$data1,'data2'=>$data2]);
+        }
+        if($request->input('type1')==2){
+            $datas = Client::all();
+            $data1=$request->input('data1');
+            $data2=$request->input('data2');
+            return view('upanel.report.clientrep2',['datas'=>$datas,'data1'=>$data1,'data2'=>$data2]);
+        }
+    }
 
 }

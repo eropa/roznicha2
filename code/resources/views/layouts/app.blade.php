@@ -25,7 +25,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <b>LIV</b>Розница 2.0 (v1.9.4)
+                    <b>LIV</b>Розница 2.0 (v1.9.5)
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -69,6 +69,8 @@
                                            href="{{ route('upaenl.pos') }}">Контрагент</a>
                                         <a class="dropdown-item"
                                            href="{{ route('upaenl.ass') }}">Ассортимент</a>
+                                        <a class="dropdown-item"
+                                           href="{{ route('upaenl.clients') }}">Клиенты</a>
                                     </div>
                                 </li>
                                 <li class="nav-item dropdown">
@@ -87,8 +89,8 @@
                                         <a class="dropdown-item"
                                            href="{{ route('upaenl.rasxod') }}">Расходы</a>
 
-                                        <a class="dropdown-item"
-                                           href="{{ route('upaenl.zaivka.index') }}">Заявка с сайта</a>
+                                      <!--  <a class="dropdown-item"
+                                           href="#">Заявка с сайта</a> -->
 
                                     </div>
                                 </li>
@@ -105,6 +107,12 @@
                                     <div class="dropdown-menu" aria-labelledby="navCompany">
                                         <a class="dropdown-item"
                                            href="{{ route('upaenl.report.getostatok') }}">Остаток</a>
+                                        <a class="dropdown-item"
+                                           href="{{ route('upaenl.report.client') }}">Клиенты</a>
+                                        <!--
+                                        <a class="dropdown-item"
+                                           href="{{ route('upaenl.report.statusOrder') }}">Заказы</a>
+                                            -->
                                     </div>
                                 </li>
                         @endcan
