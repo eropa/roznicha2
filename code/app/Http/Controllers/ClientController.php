@@ -30,6 +30,7 @@ class ClientController extends Controller
         $model->name=$request->input('name');
         $model->phone=$request->input('phone');
         $model->email=$request->input('email');
+        $model->skidka=$request->input('skidka');
         $model->save();
         return redirect()->route('upaenl.clients');
     }

@@ -40,6 +40,7 @@ class RassService
         $pos=$request->input('selectPos');
         $point=$request->input('selectSklad');
         $listrasxod=$request->input('listrasxod');
+        $skidka=$request->input('skidka');
         $user=Auth::user();
         $company=Auth::user()->getCompany();
         $sum=0;
@@ -59,9 +60,18 @@ class RassService
             $modelB->pos_ass=$posRas;
             $modelB->ass_id=$item['id'];
             $modelB->count=$item['count'];
-            $modelB->price=$item['price'];
+            if($skidka>0){
+                $modelB->price=$item['price']-($item['price']*($skidka/100));
+                $sum=$sum+($item['sum']-($item['sum']*($skidka/100)));
+            }else{
+                $modelB->price=$item['price'];
+                $sum=$sum+$item['sum'];
+            }
+
             $modelB->point_id=(int)$point;
-            $sum=$sum+$item['sum'];
+
+
+
             $modelB->save();
 
             // Списываем составной товар
@@ -91,6 +101,35 @@ class RassService
         }
         $modelR->sum=$sum;
         $modelR->save();
+
+        $totalSum=0;
+        if($idClient>0){
+            $ras=Rash::where('client',$idClient)->get();
+            $dbClient=Client::find($idClient);
+            foreach ($ras as $itemRas){
+                $totalSum=$totalSum+ $itemRas->sum;
+            }
+            $procent=0;
+            if($totalSum>=100){
+                $procent=1;
+            }
+            if($totalSum>=200){
+                $procent=2;
+            }
+            if($totalSum>=300){
+                $procent=3;
+            }
+            if($totalSum>=400){
+                $procent=4;
+            }
+            if($totalSum>=500){
+                $procent=5;
+            }
+            if($procent>$dbClient->skidka){
+                $dbClient->skidka=$procent;
+                $dbClient->save();
+            }
+        }
     }
 
     static function selectToday(){

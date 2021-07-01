@@ -30,6 +30,7 @@
                                     <th scope="col">Ф.И.О</th>
                                     <th scope="col">телефон</th>
                                     <th scope="col">почта</th>
+                                    <th scope="col">скидка</th>
                                     <th scope="col">event</th>
                                 </tr>
                                 </thead>
@@ -41,6 +42,7 @@
                                             <td>{{ $data->name }}</td>
                                             <td>{{ $data->phone }}</td>
                                             <td>{{ $data->email }}</td>
+                                            <td>{{ $data->skidka }}</td>
                                             <td>
                                                 <a class="btn btn-warning"
                                                    href="{{ route('upaenl.clients.edit',['id'=>$data->id]) }}"

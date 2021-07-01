@@ -6,6 +6,7 @@ use App\Models\Rash;
 use App\Models\Status;
 use App\services\getData;
 use App\services\RassService;
+use http\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -63,4 +64,13 @@ class RashController extends Controller
         return 1;
     }
 
+
+
+    public function skidka(Request $request){
+        $clientPhone=$request->input('clientPhone');
+        $client=\App\Models\Client::where('phone',$clientPhone)->first();
+        if(is_null($client))
+            return 0;
+        return $client->skidka;
+    }
 }

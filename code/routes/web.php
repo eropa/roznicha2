@@ -121,6 +121,7 @@ Route::middleware(['auth'])->group(function () {
     // получаем данные
     Route::post('/get/prixodcreate','PrihController@getDataCreate');
     Route::post('/get/assortiment','PrihController@getDataAss');
+
     Route::post('/set/prixod','PrihController@setPrixod');
     Route::post('/get/assid','AssController@getAssId');
     Route::post(' /get/prix1','PrihController@getPrixod');
@@ -132,7 +133,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('  /set/addrasxod','RashController@addrasxod');
     Route::post('  /get/rasxodtoday','RashController@getToday');
     Route::post('  /get/rasxodfound','RashController@getFound');
-
+    Route::post('  /get/skidka','RashController@skidka');
     Route::post('    /get/skladlist','PointController@skladlist');
 
 });

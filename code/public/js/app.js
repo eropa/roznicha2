@@ -2892,6 +2892,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "RasxodComponent",
   props: ['pos', 'point', 'assstart'],
@@ -2903,6 +2918,7 @@ __webpack_require__.r(__webpack_exports__);
       viewBtnMain: 0,
       modalData: null,
       countAdd: 0,
+      skidka: 0,
       selectDataId: 0,
       selectData: null,
       clientPhone: ""
@@ -2991,8 +3007,17 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       var tempSum = 0.00;
+      /*   this.listrasxod.forEach(function(item){
+            tempSum=tempSum+Number(item.sum);
+         });*/
+
       this.listrasxod.forEach(function (item) {
-        tempSum = tempSum + Number(item.sum);
+        if (_this3.skidka > 0) {
+          tempSum = tempSum + (Number(item.sum) - Number(item.sum) * (Number(_this3.skidka) / 100));
+          console.log(tempSum);
+        } else {
+          tempSum = tempSum + Number(item.sum);
+        }
       });
       this.sumRas = tempSum.toFixed(2);
       $('#myModalAddTovar').modal('hide');
@@ -3013,22 +3038,44 @@ __webpack_require__.r(__webpack_exports__);
         selectPos: this.pos,
         selectSklad: this.point,
         clientPhone: this.clientPhone,
-        listrasxod: this.listrasxod
+        listrasxod: this.listrasxod,
+        skidka: this.skidka
       }).then(function (response) {
         $('#myModalRasxod').modal('hide');
         $('#myUsrOplata').modal('show');
         document.location.replace("/upanel/rasxod");
       });
     },
+    getSkidka: function getSkidka() {
+      var _this4 = this;
+
+      axios.post('/get/skidka', {
+        clientPhone: this.clientPhone
+      }).then(function (response) {
+        console.log(response.data);
+        _this4.skidka = response.data;
+        var tempSum = 0;
+
+        _this4.listrasxod.forEach(function (item) {
+          if (_this4.skidka > 0) {
+            tempSum = tempSum + (Number(item.sum) - Number(item.sum) * (Number(_this4.skidka) / 100));
+          } else {
+            tempSum = tempSum + Number(item.sum);
+          }
+        });
+
+        _this4.sumRas = tempSum.toFixed(2);
+      });
+    },
     createRas: function createRas() {//this.visibleBtnCreate=0;
     }
   },
   created: function created() {
-    var _this4 = this;
+    var _this5 = this;
 
     // `this` указывает на экземпляр vm
     this.assstart.forEach(function (element) {
-      _this4.listgrass.push({
+      _this5.listgrass.push({
         id: element.id,
         name: element.name,
         image: element.image,
@@ -40517,11 +40564,40 @@ var render = function() {
                   attrs: { type: "text" },
                   domProps: { value: _vm.clientPhone },
                   on: {
+                    change: function($event) {
+                      return _vm.getSkidka()
+                    },
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
                       _vm.clientPhone = $event.target.value
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", [_vm._v("Скидка")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.skidka,
+                      expression: "skidka"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", readonly: "" },
+                  domProps: { value: _vm.skidka },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.skidka = $event.target.value
                     }
                   }
                 })
@@ -40808,21 +40884,49 @@ var render = function() {
                           )
                         ]),
                         _vm._v(" "),
-                        _c("td", [
-                          _vm._v(
-                            "\n                                    " +
-                              _vm._s(item.price) +
-                              "\n                                "
-                          )
-                        ]),
+                        _vm.skidka > 0
+                          ? _c("td", [
+                              _vm._v(
+                                "\n                                    " +
+                                  _vm._s(
+                                    item.price - item.price * (_vm.skidka / 100)
+                                  ) +
+                                  "\n                                "
+                              )
+                            ])
+                          : _vm._e(),
                         _vm._v(" "),
-                        _c("td", [
-                          _vm._v(
-                            "\n                                    " +
-                              _vm._s(item.sum) +
-                              "\n                                "
-                          )
-                        ]),
+                        _vm.skidka == 0
+                          ? _c("td", [
+                              _vm._v(
+                                "\n                                    " +
+                                  _vm._s(item.price) +
+                                  "\n                                "
+                              )
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.skidka > 0
+                          ? _c("td", [
+                              _vm._v(
+                                "\n                                    " +
+                                  _vm._s(
+                                    item.sum - item.sum * (_vm.skidka / 100)
+                                  ) +
+                                  "\n                                "
+                              )
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.skidka == 0
+                          ? _c("td", [
+                              _vm._v(
+                                "\n                                    " +
+                                  _vm._s(item.sum) +
+                                  "\n                                "
+                              )
+                            ])
+                          : _vm._e(),
                         _vm._v(" "),
                         _c("td", [
                           _c(

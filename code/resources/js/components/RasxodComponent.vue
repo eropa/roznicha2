@@ -18,7 +18,11 @@
                         </div>
                         <div class="form-group">
                             <label>Клиенты</label>
-                            <input type="text" class="form-control"  v-model="clientPhone" >
+                            <input type="text" class="form-control" v-on:change="getSkidka()"  v-model="clientPhone" >
+                        </div>
+                        <div class="form-group">
+                            <label>Скидка</label>
+                            <input type="text" class="form-control"  readonly v-model="skidka" >
                         </div>
                         <button class="btn btn-success" v-on:click="showRas">Создать</button><br><br>
                         <button  class="btn btn-danger" v-on:click="notSave()">Отмена</button>
@@ -128,12 +132,23 @@
                                     <td>
                                         {{item.count}}
                                     </td>
-                                    <td>
+
+                                    <td v-if="skidka>0">
+                                        {{item.price-item.price*(skidka/100)}}
+                                    </td>
+
+                                    <td v-if="skidka==0">
                                         {{item.price}}
                                     </td>
-                                    <td>
+
+                                    <td v-if="skidka>0">
+                                        {{item.sum-item.sum*(skidka/100)}}
+                                    </td>
+
+                                    <td v-if="skidka==0">
                                         {{item.sum}}
                                     </td>
+
                                     <td>
                                         <button type="button" class="btn btn-danger" v-on:click="deletItemRas(index)">-</button>
                                     </td>
@@ -184,6 +199,7 @@
                 viewBtnMain:0,
                 modalData:null,
                 countAdd:0,
+                skidka:0,
                 selectDataId:0,
                 selectData:null,
                 clientPhone:"",
@@ -278,9 +294,18 @@
                     })
                 }
                 var tempSum=0.00;
-                this.listrasxod.forEach(function(item){
+             /*   this.listrasxod.forEach(function(item){
                    tempSum=tempSum+Number(item.sum);
+                });*/
+                this.listrasxod.forEach((item)=>{
+                    if(this.skidka>0){
+                        tempSum=tempSum+(Number(item.sum)-Number(item.sum)*(  Number(this.skidka)/100 ));
+                        console.log(tempSum);
+                    }else{
+                        tempSum=tempSum+Number(item.sum);
+                    }
                 });
+
                 this.sumRas=tempSum.toFixed(2);
                 $('#myModalAddTovar').modal('hide');
 
@@ -305,13 +330,34 @@
                     selectSklad:this.point,
                     clientPhone:this.clientPhone,
                     listrasxod:this.listrasxod,
+                    skidka:this.skidka,
                 }).then ((response)=>{
                     $('#myModalRasxod').modal('hide');
                     $('#myUsrOplata').modal('show')
                     document.location.replace("/upanel/rasxod");
                 });
+            },
 
+            getSkidka:function(){
+                axios.post('/get/skidka', {
+                    clientPhone:this.clientPhone,
+                }).then ((response)=>{
 
+                    console.log(response.data);
+                    this.skidka=response.data;
+                    let tempSum=0;
+
+                    this.listrasxod.forEach((item)=>{
+                        if(this.skidka>0){
+                            tempSum=tempSum+(Number(item.sum)-Number(item.sum)*(  Number(this.skidka)/100 ));
+                        }else{
+                            tempSum=tempSum+Number(item.sum);
+                        }
+                    });
+
+                    this.sumRas=tempSum.toFixed(2);
+
+                });
             },
 
             createRas:function () {

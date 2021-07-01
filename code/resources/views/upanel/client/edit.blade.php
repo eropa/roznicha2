@@ -46,6 +46,14 @@
                                        name="email"
                                        placeholder="email">
                             </div>
+                            <div class="form-group">
+                                <label for="inputName">скидка</label>
+                                <input type="text" class="form-control"
+                                       id="inputName"
+                                       value="{{ $datas->skidka }}"
+                                       name="skidka"
+                                       placeholder="скидка">
+                            </div>
                             <input type="hidden" name="id" value="{{ $datas->id }}">
                             @csrf
                             <button type="submit" class="btn btn-primary">Создать</button>
